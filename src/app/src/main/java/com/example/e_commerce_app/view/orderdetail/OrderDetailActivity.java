@@ -1,0 +1,107 @@
+package com.example.e_commerce_app.view.orderdetail;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+
+import com.example.e_commerce_app.R;
+import com.example.e_commerce_app.adapter.OrderDetailAdapter;
+import com.example.e_commerce_app.common.Common;
+import com.example.e_commerce_app.object.OrderDetail;
+import com.example.e_commerce_app.presenter.orderdetail.PresenterLogicOrderDetail;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.List;
+
+import io.github.inflationx.calligraphy3.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
+import io.github.inflationx.viewpump.ViewPump;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
+
+public class OrderDetailActivity extends AppCompatActivity implements
+        IViewOrderDetail {
+    private static final String TAG = OrderDetailActivity.class.getSimpleName();
+    RecyclerView recycler_order_detail;
+    OrderDetailAdapter adapter;
+    RecyclerView.LayoutManager mLayoutManager;
+    PresenterLogicOrderDetail presenterLogicOrderDetail;
+    int id_order = 0;
+    //Need call this function after you init database
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewPump.init(ViewPump.builder()
+                .addInterceptor(new CalligraphyInterceptor(
+                        new CalligraphyConfig.Builder()
+
+                                .setDefaultFontPath("fonts/font_main.otf")
+                                .setFontAttrId(R.attr.fontPath)
+                                .build()))
+                .build());
+        setContentView(R.layout.activity_order_detail);
+        if (getIntent() != null) {
+            id_order = getIntent().getIntExtra("id_order", 0);
+        }
+        //InitView
+        initView();
+        //InitPresenter
+        presenterLogicOrderDetail = new PresenterLogicOrderDetail(this);
+        presenterLogicOrderDetail.orderDetails(Common.CURRENT_USER.getToken(), id_order);
+    }
+
+    private void initView() {
+        setUpToolbar();
+        recycler_order_detail = findViewById(R.id.recycler_order_detail);
+        recycler_order_detail.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        recycler_order_detail.setLayoutManager(mLayoutManager);
+    }
+
+    /**
+     * Set up toolbar
+     */
+    private void setUpToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("FGShop Order Detail");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void orderDetails(List<OrderDetail> orderDetails, int total) {
+        adapter = new OrderDetailAdapter(this, orderDetails, R.layout.item_order_detail);
+        recycler_order_detail.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        final NumberFormat numberFormat = new DecimalFormat("###,###");
+        getSupportActionBar().setTitle(String.valueOf(numberFormat.format(total) + " VND"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        presenterLogicOrderDetail.orderDetails(Common.CURRENT_USER.getToken(), id_order);
+    }
+}
