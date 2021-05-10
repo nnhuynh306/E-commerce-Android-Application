@@ -1,5 +1,0 @@
-<resources>
-    <style name="MyAppTheme.TextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/colorRed</item>
-    </style>
-</resources>
