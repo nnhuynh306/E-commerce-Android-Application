@@ -1,6 +1,8 @@
 package com.example.ecommerceapp.RealmObjects;
 
-public class OrderDetail {
+import io.realm.RealmObject;
+
+public class OrderDetail extends RealmObject {
 
     private Order order;
 
