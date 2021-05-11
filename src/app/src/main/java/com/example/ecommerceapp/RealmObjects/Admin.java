@@ -1,6 +1,14 @@
 package com.example.ecommerceapp.RealmObjects;
 
-public class Admin {
+import org.bson.types.ObjectId;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Admin  extends RealmObject {
+    @PrimaryKey
+    private ObjectId _id = new ObjectId();
+
     Account account;
 
     public Admin(Account account) {

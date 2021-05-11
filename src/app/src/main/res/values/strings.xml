@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">E Commerce App</string>
-    <string name="realm_app_id">eaa-tkpm-joqet</string>
-    <string name="PARTITION">TKPM</string>
+    <string name="realm_app_id">eaa-tkpm-alycs</string>
+    <string name="PARTITION">123</string>
 </resources>

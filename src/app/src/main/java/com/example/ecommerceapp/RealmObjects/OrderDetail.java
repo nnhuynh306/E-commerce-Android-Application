@@ -14,21 +14,21 @@ public class OrderDetail extends RealmObject {
 
     private Product product;
 
-    private float totalPrice;
+    private Double totalPrice;
 
     private int quantity;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(Order order, Product product, float totalPrice, int quantity) {
+    public OrderDetail(Order order, Product product, Double totalPrice, int quantity) {
         this.order = order;
         this.product = product;
         this.totalPrice = totalPrice;
         this.quantity = quantity;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -44,7 +44,7 @@ public class OrderDetail extends RealmObject {
         return product;
     }
 
-    public float getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 

@@ -23,14 +23,14 @@ public class Order extends RealmObject {
 
     private String phoneNumber;
 
-    private float totalPrice;
+    private Double totalPrice;
 
     private Account ownedAccount;
 
     @LinkingObjects("order")
     private final RealmResults<OrderDetail> orderDetails = null;
 
-    public Order(ObjectId id, Date createdDate, String address, String receiverName, String state, String phoneNumber, float totalPrice, Account ownedAccount) {
+    public Order(ObjectId id, Date createdDate, String address, String receiverName, String state, String phoneNumber, Double totalPrice, Account ownedAccount) {
         this._id = id;
         this.createdDate = createdDate;
         this.address = address;
@@ -65,7 +65,7 @@ public class Order extends RealmObject {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -96,7 +96,7 @@ public class Order extends RealmObject {
         return phoneNumber;
     }
 
-    public float getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 

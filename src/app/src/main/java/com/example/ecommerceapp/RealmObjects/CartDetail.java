@@ -16,6 +16,7 @@ public class CartDetail extends RealmObject {
     private int quantity;
 
     public CartDetail() {
+        quantity = 0;
     }
 
     public CartDetail(Cart cart, Product product, int quantity) {
