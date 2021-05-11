@@ -14,24 +14,24 @@ public class Product extends RealmObject {
 
     private int quantity;
 
-    private float price;
+    private Double price;
 
     private String description;
 
-    private RealmList<String> pictures;
+    private String picture;
 
     private ProductCategory category;
 
     public Product() {
-
+        quantity = 0;
     }
 
-    public Product(String name, int quantity, float price, String description, RealmList<String> pictures, ProductCategory category) {
+    public Product(String name, int quantity, Double price, String description, String picture, ProductCategory category) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.description = description;
-        this.pictures = pictures;
+        this.picture = picture;
         this.category = category;
     }
 
@@ -47,7 +47,7 @@ public class Product extends RealmObject {
         return quantity;
     }
 
-    public float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -55,8 +55,8 @@ public class Product extends RealmObject {
         return description;
     }
 
-    public RealmList<String> getPictures() {
-        return pictures;
+    public String getPicture() {
+        return picture;
     }
 
     public ProductCategory getCategory() {
@@ -71,7 +71,7 @@ public class Product extends RealmObject {
         this.quantity = quantity;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -79,8 +79,8 @@ public class Product extends RealmObject {
         this.description = description;
     }
 
-    public void setPictures(RealmList<String> pictures) {
-        this.pictures = pictures;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public void setCategory(ProductCategory category) {
