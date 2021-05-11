@@ -9,15 +9,15 @@ import io.realm.annotations.PrimaryKey;
 
 public class Cart extends RealmObject {
     @PrimaryKey
-    private ObjectId id = new ObjectId();
+    private ObjectId _id = new ObjectId();
 
-    private User user;
+    private Account account;
 
     @LinkingObjects("cart")
     private final RealmResults<CartDetail> cartDetails = null;
 
-    public Cart(User user) {
-        this.user = user;
+    public Cart(Account account) {
+        this.account = account;
     }
 
     public Cart() {
@@ -28,10 +28,10 @@ public class Cart extends RealmObject {
     }
 
     public Object getId() {
-        return id;
+        return _id;
     }
 
-    public User getUser() {
-        return user;
+    public Account getUser() {
+        return account;
     }
 }

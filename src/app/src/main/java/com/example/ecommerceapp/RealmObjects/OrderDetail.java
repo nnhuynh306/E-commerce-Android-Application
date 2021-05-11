@@ -1,8 +1,14 @@
 package com.example.ecommerceapp.RealmObjects;
 
+import org.bson.types.ObjectId;
+
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class OrderDetail extends RealmObject {
+
+    @PrimaryKey
+    private ObjectId _id = new ObjectId();
 
     private Order order;
 
@@ -44,5 +50,9 @@ public class OrderDetail extends RealmObject {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public ObjectId getId() {
+        return _id;
     }
 }

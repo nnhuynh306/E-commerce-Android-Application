@@ -7,9 +7,9 @@ import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
-public class User extends RealmObject {
+public class Account extends RealmObject {
     @PrimaryKey
-    private String userName;
+    private String _id;
 
     private String password;
 
@@ -23,23 +23,28 @@ public class User extends RealmObject {
 
     private String phoneNumber;
 
-    @LinkingObjects("user")
+    @LinkingObjects("account")
     private final RealmResults<Cart> cart = null;
 
-    @LinkingObjects("ownedUser")
+    @LinkingObjects("ownedAccount")
     private final RealmResults<Order> orders = null;
 
-    public User() {
+    public Account() {
     }
 
-    public User(String userName, String password, String name, Date dob, String email, String address, String phoneNumber) {
-        this.userName = userName;
+    public Account(String userName, String password, String name, Date dob, String email, String address, String phoneNumber) {
+        this._id = userName;
         this.password = password;
         this.name = name;
         this.dob = dob;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Account(String userName, String password) {
+        this._id = userName;
+        this.password = password;
     }
 
     public RealmResults<Cart> getCart() {
@@ -51,7 +56,7 @@ public class User extends RealmObject {
     }
 
     public String getUserName() {
-        return userName;
+        return _id;
     }
 
     public String getPassword() {
