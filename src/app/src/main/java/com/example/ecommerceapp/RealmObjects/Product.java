@@ -4,12 +4,11 @@ import org.bson.types.ObjectId;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
 public class Product extends RealmObject {
     @PrimaryKey
-    private ObjectId id = new ObjectId();
+    private ObjectId _id = new ObjectId();
 
     private String name;
 
@@ -37,7 +36,7 @@ public class Product extends RealmObject {
     }
 
     public ObjectId getId() {
-        return id;
+        return _id;
     }
 
     public String getName() {

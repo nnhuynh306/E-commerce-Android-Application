@@ -1,16 +1,16 @@
 package com.example.ecommerceapp.RealmObjects;
 
 public class Admin {
-    User user;
+    Account account;
 
-    public Admin(User user) {
-        this.user = user;
+    public Admin(Account account) {
+        this.account = account;
     }
 
     public Admin() {
     }
 
-    public User getUser() {
-        return user;
+    public Account getUser() {
+        return account;
     }
 }

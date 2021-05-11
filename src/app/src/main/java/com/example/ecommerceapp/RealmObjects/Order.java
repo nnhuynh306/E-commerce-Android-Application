@@ -11,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Order extends RealmObject {
     @PrimaryKey
-    private ObjectId id = new ObjectId();
+    private ObjectId _id = new ObjectId();
 
     private Date createdDate;
 
@@ -25,28 +25,24 @@ public class Order extends RealmObject {
 
     private float totalPrice;
 
-    private User ownedUser;
+    private Account ownedAccount;
 
     @LinkingObjects("order")
     private final RealmResults<OrderDetail> orderDetails = null;
 
-    public Order(ObjectId id, Date createdDate, String address, String receiverName, String state, String phoneNumber, float totalPrice, User ownedUser) {
-        this.id = id;
+    public Order(ObjectId id, Date createdDate, String address, String receiverName, String state, String phoneNumber, float totalPrice, Account ownedAccount) {
+        this._id = id;
         this.createdDate = createdDate;
         this.address = address;
         this.receiverName = receiverName;
         this.state = state;
         this.phoneNumber = phoneNumber;
         this.totalPrice = totalPrice;
-        this.ownedUser = ownedUser;
+        this.ownedAccount = ownedAccount;
     }
 
     public RealmResults<OrderDetail> getOrderDetails() {
         return orderDetails;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
     }
 
     public void setCreatedDate(Date createdDate) {
@@ -77,7 +73,7 @@ public class Order extends RealmObject {
     }
 
     public ObjectId getId() {
-        return id;
+        return _id;
     }
 
     public Date getCreatedDate() {
@@ -104,7 +100,7 @@ public class Order extends RealmObject {
         return totalPrice;
     }
 
-    public User getOwnedUser() {
-        return ownedUser;
+    public Account getOwnedUser() {
+        return ownedAccount;
     }
 }

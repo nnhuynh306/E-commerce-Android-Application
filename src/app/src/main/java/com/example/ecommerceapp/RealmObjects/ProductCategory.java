@@ -9,7 +9,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class ProductCategory extends RealmObject {
     @PrimaryKey
-    private ObjectId id = new ObjectId();
+    private ObjectId _id = new ObjectId();
 
     private String name;
 
@@ -29,7 +29,7 @@ public class ProductCategory extends RealmObject {
     }
 
     public ObjectId getId() {
-        return id;
+        return _id;
     }
 
     public String getName() {
