@@ -1,10 +1,10 @@
 package com.example.ecommerceapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ecommerceapp.RealmObjects.Account;
 import com.example.ecommerceapp.RealmObjects.Cart;
