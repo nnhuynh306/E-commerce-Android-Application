@@ -43,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <GridLayout
-                    android:layout_margin="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:rowCount="3"
@@ -122,9 +121,10 @@
                     android:id="@+id/check_out_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_bg"
+                    android:padding="2dp"
+                    android:background="@drawable/button_bg_rounded_corners"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/check_out"
+                    android:text="@string/go_to_check_out"
                     android:layout_gravity="end"
                     android:textColor="@color/white"
                     android:layout_marginEnd="20dp"/>
