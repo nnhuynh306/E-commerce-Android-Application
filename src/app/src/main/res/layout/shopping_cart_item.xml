@@ -85,6 +85,8 @@
                 android:text="QUANTITY"/>
             <EditText
                 android:id="@+id/productQuantity"
+                android:inputType="number"
+                android:imeOptions="actionDone"
                 android:background="@drawable/layout_bg_rounded_corner"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
