@@ -7,11 +7,17 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.ecommerceapp.RealmObjects.Account;
-import com.example.ecommerceapp.ViewModel.ViewModelTest;
+import com.example.ecommerceapp.RealmObjects.Cart;
+import com.example.ecommerceapp.RealmObjects.CartDetail;
+import com.example.ecommerceapp.RealmObjects.Product;
+import com.example.ecommerceapp.RealmObjects.ProductCategory;
 
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -26,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewModelTest viewModelTest = new ViewModelProvider(this).get(ViewModelTest.class);
-
         String appID = getString(R.string.realm_app_id); // replace this with your App ID
         App app = new App(new AppConfiguration.Builder(appID).build());
 
@@ -38,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("AUTH", "Successfully authenticated anonymously.");
                 user.set(app.currentUser());
 
-                Account account = new Account("test", "123");
-
                 SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
                         .allowQueriesOnUiThread(true)
                         .allowWritesOnUiThread(true)
@@ -49,11 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Realm realm) {
                         Log.v("EXAMPLE", "Successfully opened a realm.");
-                        // Read all tasks in the realm. No special syntax required for synced realms.
-                        RealmResults<Account> tasks = realm.where(Account.class).findAll();
-                        // Write to the realm. No special syntax required for synced realms.
-                        Log.v("EXAMPLE", "Data" + tasks.asJSON());
-                        // Don't forget to close your realm!
+                        
                         realm.close();
                     }
                 });

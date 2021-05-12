@@ -2,4 +2,16 @@
     <string name="app_name">E Commerce App</string>
     <string name="realm_app_id">eaa-tkpm-alycs</string>
     <string name="PARTITION">123</string>
+    <string name="subtotal_price">subtotal price:</string>
+    <string name="zero_number">0</string>
+    <string name="discount">discount:</string>
+    <string name="total_price">TOTAL:</string>
+
+    <string name="lorem">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</string>
+    <string name="check_out">CHECK OUT</string>
+    <string name="cart_items">CART ITEMS</string>
+    <string name="change_applied">Changes are applied</string>
+    <string name="quantity_error">invalid quantity</string>
+    <string name="item_deleted">item is deleted</string>
+    <string name="shopping_cart">Shopping cart</string>
 </resources>
