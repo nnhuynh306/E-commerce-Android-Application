@@ -96,6 +96,8 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         private TextView productPrice;
 
         private EditText productQuantity;
+        private ImageButton increaseProductQuantityButton;
+        private ImageButton decreaseProductQuantityButton;
 
         private ImageButton deleteButton;
         private ImageButton checkButton;
@@ -107,9 +109,25 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             productPrice = itemView.findViewById(R.id.productPrice);
 
             productQuantity = itemView.findViewById(R.id.productQuantity);
+            increaseProductQuantityButton = itemView.findViewById(R.id.increaseProductQuantity);
+            decreaseProductQuantityButton = itemView.findViewById(R.id.decreaseProductQuantity);
 
             deleteButton = itemView.findViewById(R.id.delete_button);
             checkButton = itemView.findViewById(R.id.check_button);
+
+            decreaseProductQuantityButton.setOnClickListener(v -> {
+                int newQuantity = Integer.parseInt(productQuantity.getText().toString()) - 1;
+                if (newQuantity > 0) {
+                    productQuantity.setText(String.valueOf(newQuantity));
+                } else {
+                    Toast.makeText(context, R.string.quantity_error, Toast.LENGTH_LONG).show();
+                }
+            });
+
+            increaseProductQuantityButton.setOnClickListener(v -> {
+                productQuantity.setText(String
+                        .valueOf(Integer.parseInt(productQuantity.getText().toString()) + 1));
+            });
 
         }
     }

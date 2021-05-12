@@ -18,6 +18,5 @@ public class InitApplication extends Application {
         super.onCreate();
         Realm.init(this);
 
-
     }
 }
