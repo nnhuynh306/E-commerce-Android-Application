@@ -1,11 +1,8 @@
 package com.example.ecommerceapp.ViewModel;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ecommerceapp.R;

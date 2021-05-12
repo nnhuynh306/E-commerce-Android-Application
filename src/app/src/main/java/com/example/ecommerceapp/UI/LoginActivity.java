@@ -1,25 +1,19 @@
 package com.example.ecommerceapp.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.ViewModel.LoginViewModel;
-import com.example.ecommerceapp.controller.DB_Controller;
-
-import io.realm.mongodb.App;
 
 public class LoginActivity extends AppCompatActivity {
-    private int loginState;
+    private int loginState=0;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -35,8 +29,10 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginViewModel.login(email.getText().toString(),password.getText().toString());
-
+                if(loginViewModel.login(email.getText().toString(),password.getText().toString())){
+                    loginState = 1;
+                }
+                loginViewModel.status(loginState);
             }
         });
 

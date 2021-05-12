@@ -1,14 +1,14 @@
 package com.example.ecommerceapp.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.ecommerceapp.R;
-import com.example.ecommerceapp.ViewModel.LoginViewModel;
 import com.example.ecommerceapp.ViewModel.SignUpViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -29,8 +29,11 @@ public class SignUpActivity extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialog dialog = ProgressDialog.show(SignUpActivity.this, "",
+                        "Loading. Please wait...", true);
                 isSignUp = signUpViewModel.signUp(email.getText().toString()
                         ,password.getText().toString(), repass.getText().toString());
+                dialog.cancel();
                 signUpViewModel.status(isSignUp);
             }
         });
