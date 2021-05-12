@@ -34,6 +34,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     List<CartDetail> cartDetails = new ArrayList<>();
 
 
+
     public ShoppingCartAdapter(Context context, ShoppingCartViewModel shoppingCartViewModel) {
         this.context = context;
         this.shoppingCartViewModel = shoppingCartViewModel;

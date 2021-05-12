@@ -51,44 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Realm realm) {
                         Log.v("EXAMPLE", "Successfully opened a realm.");
-
-//                        realm.executeTransaction(r -> {
-//                            RealmQuery<Product> productRealmQuery = realm.where(Product.class);
-//                            RealmResults<Product> products = productRealmQuery.equalTo("category.name", "phone").findAll();
-//                            Log.v("FIND", "find: " + products.asJSON());
-//
-//                            RealmQuery<ProductCategory> categoryRealmQuery = realm.where(ProductCategory.class);
-//                            RealmResults<ProductCategory> categories = categoryRealmQuery.equalTo("name", "phone").findAll();
-//                            Log.v("FIND", "find: " + categories.asJSON());
-//
-//                        });
-
-                        realm.executeTransaction(r -> {
-                            r.where(CartDetail.class).findAll();
-                            Cart cart = r.where(Cart.class).equalTo("account._id", "admin").findFirst();
-                            assert cart != null;
-                            RealmResults<CartDetail> cartDetails = cart.getCartDetails();
-                            Log.v("FIND", "find: " + cartDetails.asJSON());
-//                            for (Product product: products) {
-//                                r.insertOrUpdate(new CartDetail(cart, product, 10));
-//                            }
-                        });
-
-//                        ProductCategory category = new ProductCategory("phone");
-//                        realm.executeTransaction(r -> {
-//                            r.insertOrUpdate(category);
-//                        });
-//
-//                        realm.executeTransaction(r -> {
-//                            r.insertOrUpdate(new Product("Samsung Galaxy J1", 1000, 12.1, "DESCRIPTION", "samsunggalaxyj1.png", category));
-//                            r.insertOrUpdate(new Product("Samsung Galaxy J2", 1000, 12.2, "DESCRIPTION", "samsunggalaxyj2.png", category));
-//                            r.insertOrUpdate(new Product("Samsung Galaxy J3", 1000, 12.3, "DESCRIPTION", "samsunggalaxyj3.png", category));
-//                            r.insertOrUpdate(new Product("Samsung Galaxy J4", 1000, 12.4, "DESCRIPTION", "samsunggalaxyj4.png", category));
-//                            r.insertOrUpdate(new Product("Samsung Galaxy J5", 1000, 12.5, "DESCRIPTION", "samsunggalaxyj5.png", category));
-//                            r.insertOrUpdate(new Product("Samsung Galaxy J6", 1000, 12.6, "DESCRIPTION", "samsunggalaxyj6.png", category));
-//                        });
-
-
+                        
                         realm.close();
                     }
                 });

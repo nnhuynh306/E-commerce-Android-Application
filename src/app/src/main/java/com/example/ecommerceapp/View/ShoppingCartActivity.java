@@ -1,5 +1,6 @@
 package com.example.ecommerceapp.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Lifecycle;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.ecommerceapp.MainActivity;
 import com.example.ecommerceapp.R;
@@ -19,7 +22,10 @@ import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.View.Adapters.ShoppingCartAdapter;
 import com.example.ecommerceapp.ViewModel.ShoppingCartViewModel;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
@@ -49,7 +55,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         shoppingCartViewModel = new ViewModelProvider(this).get(ShoppingCartViewModel.class);
 
-        toolbar = findViewById(R.id.toolbar);
+//        toolbar = findViewById(R.id.toolbar);
 
         String userName = "admin";
 
@@ -85,6 +91,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                             @Override
                             public void onChanged(List<CartDetail> cartDetails) {
                                 cartAdapter.setCartDetails(cartDetails);
+                                setPrice(cartDetails, 2);
                             }
                         });
                     }
@@ -94,6 +101,33 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         assert getSupportActionBar()!=null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.shopping_cart);
+
+        findViewById(R.id.check_out_button).setOnClickListener(v -> {
+
+        });
+    }
+
+    private void setPrice(@NonNull List<CartDetail> cartDetails, int decimalPlaces) {
+        Double subtotalPrice = (double) 0, totalPrice;
+        Double discount = (double) 0;
+        TextView totalPriceView = findViewById(R.id.totalPrice);
+        TextView subtotalPriceView = findViewById(R.id.subtotalPrice);
+
+        for(CartDetail cartDetail: cartDetails) {
+            subtotalPrice += cartDetail.getQuantity() * cartDetail.getProduct().getPrice();
+        }
+
+        BigDecimal bd;
+
+        bd = BigDecimal.valueOf(subtotalPrice);
+        bd = bd.setScale(decimalPlaces, RoundingMode.HALF_UP);
+        subtotalPriceView.setText(String.valueOf(bd.doubleValue()));
+
+        totalPrice = subtotalPrice - (subtotalPrice * discount);
+        bd = BigDecimal.valueOf(totalPrice);
+        bd = bd.setScale(decimalPlaces, RoundingMode.HALF_UP);
+        totalPriceView.setText(String.valueOf(bd.doubleValue()));
     }
 
     @Override
