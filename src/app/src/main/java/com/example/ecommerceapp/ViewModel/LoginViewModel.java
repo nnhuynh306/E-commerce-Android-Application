@@ -10,43 +10,39 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.example.ecommerceapp.RealmObjects.Account;
+import com.example.ecommerceapp.controller.DB_Controller;
+
+import io.realm.mongodb.App;
 
 public class LoginViewModel extends BaseObservable {
 
     private Context context;
-    private Account account;
     private String successMessage = "Login successful";
     private String errorMessage = "Email or Password is not valid";
+    private String email;
+    private String password;
+    private DB_Controller db_controller;
 
 
-    @Bindable
-    public String getUserEmail() {
-        return account.getEmail();
-    }
-    @Bindable
-    public String getUserPassword() {
-        return account.getPassword();
-    }
-
-    public void setUserEmail(String userEmail){
-        account.setEmail(userEmail);
-    }
-    public void setUserPass(String userPass){
-        account.setPassword(userPass);
-    }
     public LoginViewModel(Context context) {
         this.context = context;
-        account = new Account("","");
+        db_controller = new DB_Controller( context);
     }
-    public void onButtonClicked() {
-        if (isValid()) {
-            Toast.makeText(context,successMessage,Toast.LENGTH_LONG);
-        } else{
-            Toast.makeText(context,errorMessage,Toast.LENGTH_LONG);
-        }
+
+    public void login(String email, String password){
+        this.email = email;
+        this.password = password;
+
+        db_controller.login(email,password);
 
     }
-    public boolean isValid() {
-        return true;
+    public int getLoginStatus(){return db_controller.getCheckLogin();}
+    public void status(boolean loginStatus){
+        if (loginStatus){
+            Toast.makeText(context,successMessage,Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context,errorMessage,Toast.LENGTH_SHORT).show();
+        }
     }
+
 }

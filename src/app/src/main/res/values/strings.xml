@@ -10,4 +10,12 @@
     <string name="forget_pass">Forget your password ?</string>
     <string name="create_new_account">First time here ?</string>
     <string name="sign_up">Sign up</string>
+    <string name="successMess">Login successful</string>
+    <string name="errorMess">Email or Password is not valid</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Enter email here</string>
+    <string name="signup_string">SIGN UP</string>
+    <string name="repass">Enter password again</string>
+    <string name="sign_in">Have an account?</string>
+    <string name="login">Login</string>
 </resources>
