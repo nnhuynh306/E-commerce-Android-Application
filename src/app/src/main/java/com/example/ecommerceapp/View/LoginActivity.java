@@ -1,4 +1,4 @@
-package com.example.ecommerceapp.UI;
+package com.example.ecommerceapp.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signup = new Intent(LoginActivity.this,SignUpActivity.class);
+                Intent signup = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(signup);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.ecommerceapp.UI;
+package com.example.ecommerceapp.View;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
