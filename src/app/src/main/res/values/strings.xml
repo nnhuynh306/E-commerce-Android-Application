@@ -16,4 +16,18 @@
     <string name="shopping_cart">Shopping cart</string>
     <string name="search">Search</string>
     <string name="category">Category</string>
+    <string name="text_holder">TEXT HOLDER...</string>
+    <string name="quantity_holder">quantity...</string>
+    <string name="login_string">LOGIN</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Enter your email here</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Enter your password here</string>
+    <string name="forget_pass">Forget your password ?</string>
+    <string name="create_new_account">First time here ?</string>
+    <string name="sign_up">Sign up now</string>
+    <string name="signup_string">SIGN UP</string>
+    <string name="repass">Enter password again</string>
+    <string name="sign_in">Have an account ?</string>
+    <string name="login">Login now</string>
 </resources>
