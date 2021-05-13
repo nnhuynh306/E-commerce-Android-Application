@@ -19,11 +19,11 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:gravity="center"
             android:rotation="270"
-            android:text="Face"
+            android:text="Cosmetic"
             android:textColor="#373131"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/textView"
@@ -33,11 +33,11 @@
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:gravity="center"
             android:rotation="270"
-            android:text="Skin"
+            android:text="Skin care"
             android:textColor="#373131"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
@@ -47,11 +47,11 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:gravity="center"
             android:rotation="270"
-            android:text="Body"
+            android:text="Fashion"
             android:textColor="#005B1B"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
@@ -72,12 +72,12 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_marginBottom="80dp"
             android:gravity="center"
             android:rotation="270"
-            android:text="Hair"
+            android:text="Perfume"
             android:textColor="#373131"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/imageView2"
@@ -86,12 +86,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView5"
+    <EditText
+        android:id="@+id/search_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:hint="@string/search"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,17 +105,9 @@
         android:layout_marginTop="4dp"
         android:textColor="@android:color/background_dark"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintStart_toStartOf="@+id/search_bar"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
 
-    <ImageView
-        android:id="@+id/profilePic"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView4"

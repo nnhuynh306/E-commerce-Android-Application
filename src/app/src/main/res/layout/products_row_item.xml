@@ -16,10 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/btn_favourite"
         android:layout_width="39dp"
         android:layout_height="42dp"
         android:layout_marginStart="32dp"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/prod_name" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/prod_qty_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="250 ml"
+        android:text="10"
         android:textColor="@android:color/background_dark"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="@+id/textView8"
@@ -68,9 +68,9 @@
         android:textColor="#42995C"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="@+id/prod_qty"
-        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="@+id/prod_qty_title"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintStart_toStartOf="@+id/prod_qty_title"
         app:layout_constraintTop_toTopOf="@+id/prod_qty" />
 
     <TextView
@@ -80,13 +80,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="270dp"
         android:layout_marginEnd="32dp"
-        android:text="Japanese Cherry Blossom"
+        android:text="Chanel"
         android:textColor="@android:color/background_dark"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_favourite" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
