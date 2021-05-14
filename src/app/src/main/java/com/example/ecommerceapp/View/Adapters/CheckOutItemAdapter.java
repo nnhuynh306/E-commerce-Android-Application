@@ -26,24 +26,20 @@ import java.util.zip.Inflater;
 import io.realm.Realm;
 import io.realm.mongodb.App;
 
-public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder> {
+public class CheckOutItemAdapter extends RecyclerView.Adapter<CheckOutItemAdapter.ViewHolder> {
 
     Context context;
     ShoppingCartViewModel shoppingCartViewModel;
     Realm realm;
     List<CartDetail> cartDetails = new ArrayList<>();
 
-    App app;
 
-    public ShoppingCartAdapter(Context context, ShoppingCartViewModel shoppingCartViewModel) {
+
+    public CheckOutItemAdapter(Context context, ShoppingCartViewModel shoppingCartViewModel) {
         this.context = context;
         this.shoppingCartViewModel = shoppingCartViewModel;
-;
+        ;
     };
-
-    public void setApp(App app) {
-        this.app = app;
-    }
 
     public void setRealm(Realm realm) {
         this.realm = realm;
@@ -51,11 +47,11 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.shopping_cart_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.check_out_cart_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShoppingCartAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartDetail cartDetail = this.cartDetails.get(position);
         Product product = cartDetail.getProduct();
 
@@ -67,20 +63,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         holder.productName.setText(product.getName());
         holder.productPrice.setText(String.valueOf(product.getPrice() * cartDetail.getQuantity()));
         holder.productQuantity.setText(String.valueOf(cartDetail.getQuantity()));
-
-        holder.checkButton.setOnClickListener(v -> {
-            int newQuantity = Integer.parseInt(holder.productQuantity.getText().toString());
-            if (newQuantity > 0) {
-                shoppingCartViewModel.updateCartDetailQuantity(realm, cartDetail,newQuantity);
-                Toast.makeText(context, R.string.change_applied, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(context, R.string.quantity_error, Toast.LENGTH_LONG).show();
-            }
-        });
-        holder.deleteButton.setOnClickListener(v -> {
-            shoppingCartViewModel.deleteCartDetail(realm, cartDetail);
-            Toast.makeText(context, R.string.item_deleted, Toast.LENGTH_LONG).show();
-        });
 
     }
 
@@ -99,12 +81,8 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         private TextView productName;
         private TextView productPrice;
 
-        private EditText productQuantity;
-        private ImageButton increaseProductQuantityButton;
-        private ImageButton decreaseProductQuantityButton;
+        private TextView productQuantity;
 
-        private ImageButton deleteButton;
-        private ImageButton checkButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,25 +91,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             productPrice = itemView.findViewById(R.id.productPrice);
 
             productQuantity = itemView.findViewById(R.id.productQuantity);
-            increaseProductQuantityButton = itemView.findViewById(R.id.increaseProductQuantity);
-            decreaseProductQuantityButton = itemView.findViewById(R.id.decreaseProductQuantity);
-
-            deleteButton = itemView.findViewById(R.id.delete_button);
-            checkButton = itemView.findViewById(R.id.check_button);
-
-            decreaseProductQuantityButton.setOnClickListener(v -> {
-                int newQuantity = Integer.parseInt(productQuantity.getText().toString()) - 1;
-                if (newQuantity > 0) {
-                    productQuantity.setText(String.valueOf(newQuantity));
-                } else {
-                    Toast.makeText(context, R.string.quantity_error, Toast.LENGTH_LONG).show();
-                }
-            });
-
-            increaseProductQuantityButton.setOnClickListener(v -> {
-                productQuantity.setText(String
-                        .valueOf(Integer.parseInt(productQuantity.getText().toString()) + 1));
-            });
 
         }
     }
