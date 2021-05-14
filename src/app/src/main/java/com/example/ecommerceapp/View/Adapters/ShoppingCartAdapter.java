@@ -33,13 +33,17 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     Realm realm;
     List<CartDetail> cartDetails = new ArrayList<>();
 
-
+    App app;
 
     public ShoppingCartAdapter(Context context, ShoppingCartViewModel shoppingCartViewModel) {
         this.context = context;
         this.shoppingCartViewModel = shoppingCartViewModel;
 ;
     };
+
+    public void setApp(App app) {
+        this.app = app;
+    }
 
     public void setRealm(Realm realm) {
         this.realm = realm;

@@ -1,22 +1,18 @@
-package com.example.ecommerceapp.View;
+   package com.example.ecommerceapp.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.ecommerceapp.MainActivity;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.View.Adapters.ShoppingCartAdapter;
@@ -25,14 +21,11 @@ import com.example.ecommerceapp.ViewModel.ShoppingCartViewModel;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 
@@ -86,14 +79,15 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     public void onSuccess(Realm realm) {
                         ShoppingCartActivity.this.realm = realm;
                         cartAdapter.setRealm(realm);
-                        shoppingCartViewModel.loadCartDetails(realm, userName);
-                        shoppingCartViewModel.getCartDetailsLiveData().observe(ShoppingCartActivity.this, new Observer<List<CartDetail>>() {
-                            @Override
-                            public void onChanged(List<CartDetail> cartDetails) {
-                                cartAdapter.setCartDetails(cartDetails);
-                                setPrice(cartDetails, 2);
-                            }
-                        });
+                        if (shoppingCartViewModel.loadCartDetails(realm, userName)) {
+                            shoppingCartViewModel.getCartDetailsLiveData().observe(ShoppingCartActivity.this, new Observer<List<CartDetail>>() {
+                                @Override
+                                public void onChanged(List<CartDetail> cartDetails) {
+                                    cartAdapter.setCartDetails(cartDetails);
+                                    setPrice(cartDetails, 2);
+                                }
+                            });
+                        }
                     }
                 });
             }
@@ -104,7 +98,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.shopping_cart);
 
         findViewById(R.id.check_out_button).setOnClickListener(v -> {
-
+            Intent checkOut = new Intent(this, CheckOutActivity.class);
+            realm.close();
+            finish();
+            startActivity(checkOut);
         });
     }
 

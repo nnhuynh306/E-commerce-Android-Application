@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ecommerceapp.MainActivity;
 import com.example.ecommerceapp.R;
@@ -25,6 +28,8 @@ import com.example.ecommerceapp.ViewModel.ShoppingCartViewModel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
@@ -49,6 +54,8 @@ public class CheckOutActivity extends AppCompatActivity {
 
     CheckOutItemAdapter cartAdapter;
 
+    EditText addressEditText, phoneNumberEditText, receiverNameEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,10 @@ public class CheckOutActivity extends AppCompatActivity {
 
         String appID = getString(R.string.realm_app_id); // replace this with your App ID
         App app = new App(new AppConfiguration.Builder(appID).build());
+
+        addressEditText = findViewById(R.id.address);
+        phoneNumberEditText = findViewById(R.id.phoneNumber);
+        receiverNameEditText = findViewById(R.id.receiverName);
 
         Credentials anonymousCredentials = Credentials.anonymous();
 
@@ -105,7 +116,43 @@ public class CheckOutActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.check_out);
 
         findViewById(R.id.check_out_button).setOnClickListener(v -> {
+            Date createdDate = Calendar.getInstance().getTime();
+            String address = addressEditText.getText().toString();
+            String receiverName = receiverNameEditText.getText().toString();
+            String state = "UNCONFIRMED";
+            String phoneNumber = phoneNumberEditText.getText().toString();
+            TextView totalPriceView = findViewById(R.id.totalPrice);
+            Double totalPrice = Double.parseDouble(totalPriceView.getText().toString());
 
+            if (receiverName.isEmpty()) {
+                Toast toast = Toast.makeText(this, "Receiver's name can't be empty", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                receiverNameEditText.requestFocus();
+                return;
+            }
+            if (phoneNumber.isEmpty()) {
+                Toast toast = Toast.makeText(this, "Phone number can't be empty", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                phoneNumberEditText.requestFocus();
+                return;
+            }
+
+            if (address.isEmpty()) {
+                Toast toast = Toast.makeText(this, "Address can't be empty", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                addressEditText.requestFocus();
+                return;
+            }
+
+            if (shoppingCartViewModel.checkout(realm, shoppingCartViewModel.getCartDetails(realm, userName),
+                    createdDate, address, receiverName, state, phoneNumber, totalPrice, userName)) {
+                Toast.makeText(this, "Order is saved", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Error saving order. Some products may be out of stock", Toast.LENGTH_LONG).show();
+            }
         });
     }
 
