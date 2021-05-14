@@ -30,8 +30,7 @@ public class Order extends RealmObject {
     @LinkingObjects("order")
     private final RealmResults<OrderDetail> orderDetails = null;
 
-    public Order(ObjectId id, Date createdDate, String address, String receiverName, String state, String phoneNumber, Double totalPrice, Account ownedAccount) {
-        this._id = id;
+    public Order(Date createdDate, String address, String receiverName, String state, String phoneNumber, Double totalPrice, Account ownedAccount) {
         this.createdDate = createdDate;
         this.address = address;
         this.receiverName = receiverName;
