@@ -132,8 +132,9 @@
         android:id="@+id/product_recycler"
         android:layout_width="0dp"
         android:layout_height="550dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/cat_recycler"
         tools:listitem="@layout/products_row_item" />
