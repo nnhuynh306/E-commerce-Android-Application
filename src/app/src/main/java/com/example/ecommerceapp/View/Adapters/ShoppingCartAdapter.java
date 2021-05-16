@@ -89,6 +89,10 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         notifyDataSetChanged();
     }
 
+    public List<CartDetail> getCartDetails() {
+        return cartDetails;
+    }
+
     @Override
     public int getItemCount() {
         return cartDetails.size();

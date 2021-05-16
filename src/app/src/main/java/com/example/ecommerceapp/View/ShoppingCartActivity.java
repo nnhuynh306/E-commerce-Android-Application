@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.View.Adapters.ShoppingCartAdapter;
@@ -52,8 +54,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         String userName = "admin";
 
-        String appID = getString(R.string.realm_app_id); // replace this with your App ID
-        App app = new App(new AppConfiguration.Builder(appID).build());
+        App app = new RealmApp(this).getApp();
 
         Credentials anonymousCredentials = Credentials.anonymous();
 
@@ -98,10 +99,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.shopping_cart);
 
         findViewById(R.id.check_out_button).setOnClickListener(v -> {
-            Intent checkOut = new Intent(this, CheckOutActivity.class);
-            realm.close();
-            finish();
-            startActivity(checkOut);
+            if (cartAdapter.getCartDetails().size() > 0) {
+                Intent checkOut = new Intent(this, CheckOutActivity.class);
+                realm.close();
+                finish();
+                startActivity(checkOut);
+            } else {
+                Toast.makeText(this, R.string.empty_cart_error, Toast.LENGTH_LONG).show();
+            }
         });
     }
 
@@ -131,5 +136,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
     protected void onDestroy() {
         realm.close();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
     }
 }

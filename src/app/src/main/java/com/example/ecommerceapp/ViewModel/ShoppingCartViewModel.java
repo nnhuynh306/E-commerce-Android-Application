@@ -82,7 +82,8 @@ public class ShoppingCartViewModel extends ViewModel {
         return result[0];
     }
 
-    public boolean checkout(Realm realm, List<CartDetail> cartDetails, Date createdDate, String address, String receiverName, String state, String phoneNumber, Double totalPrice, String ownedAccountName) {
+    public boolean checkout(Realm realm, String userName, List<CartDetail> cartDetails
+            , Date createdDate, String address, String receiverName, String state, String phoneNumber, Double totalPrice, String ownedAccountName) {
         AtomicBoolean flag = new AtomicBoolean(false);
         realm.executeTransaction(r -> {
             List<OrderDetail> orderDetails = new ArrayList<>();
@@ -96,8 +97,16 @@ public class ShoppingCartViewModel extends ViewModel {
                         (cartDetail.getProduct().getPrice() * cartDetail.getQuantity()),
                         cartDetail.getQuantity()
                 ));
+
             }
+
+            Cart cart = Objects.requireNonNull(r.where(Cart.class)
+                    .equalTo("account._id", userName).findFirst());
+
             r.insertOrUpdate(orderDetails);
+
+            RealmResults<CartDetail> deleteCartDetails = cart.getCartDetails();
+            deleteCartDetails.deleteAllFromRealm();
             flag.set(true);
         });
 

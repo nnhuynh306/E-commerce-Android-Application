@@ -35,4 +35,5 @@
     <string name="repass">Enter password again</string>
     <string name="sign_in">Have an account ?</string>
     <string name="login">Login now</string>
+    <string name="empty_cart_error">Your cart doesn\'t have any items</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ecommerceapp.MainActivity;
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.View.Adapters.CheckOutItemAdapter;
@@ -67,8 +69,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
         String userName = "admin";
 
-        String appID = getString(R.string.realm_app_id); // replace this with your App ID
-        App app = new App(new AppConfiguration.Builder(appID).build());
+        App app = new RealmApp(this).getApp();
 
         addressEditText = findViewById(R.id.address);
         phoneNumberEditText = findViewById(R.id.phoneNumber);
@@ -84,28 +85,22 @@ public class CheckOutActivity extends AppCompatActivity {
         cartView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         cartView.setAdapter(cartAdapter);
 
-        app.loginAsync(anonymousCredentials, it -> {
-            if (it.isSuccess()) {
-                Log.v("AUTH", "Successfully authenticated anonymously.");
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
 
-                SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
-                        .allowQueriesOnUiThread(true)
-                        .allowWritesOnUiThread(true)
-                        .build();
-
-                Realm.getInstanceAsync(config, new Realm.Callback() {
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                CheckOutActivity.this.realm = realm;
+                cartAdapter.setRealm(realm);
+                shoppingCartViewModel.loadCartDetails(realm, userName);
+                shoppingCartViewModel.getCartDetailsLiveData().observe(CheckOutActivity.this, new Observer<List<CartDetail>>() {
                     @Override
-                    public void onSuccess(Realm realm) {
-                        CheckOutActivity.this.realm = realm;
-                        cartAdapter.setRealm(realm);
-                        shoppingCartViewModel.loadCartDetails(realm, userName);
-                        shoppingCartViewModel.getCartDetailsLiveData().observe(CheckOutActivity.this, new Observer<List<CartDetail>>() {
-                            @Override
-                            public void onChanged(List<CartDetail> cartDetails) {
-                                cartAdapter.setCartDetails(cartDetails);
-                                setPrice(cartDetails, 2);
-                            }
-                        });
+                    public void onChanged(List<CartDetail> cartDetails) {
+                        cartAdapter.setCartDetails(cartDetails);
+                        setPrice(cartDetails, 2);
                     }
                 });
             }
@@ -116,6 +111,12 @@ public class CheckOutActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.check_out);
 
         findViewById(R.id.check_out_button).setOnClickListener(v -> {
+
+            if (cartAdapter.getCartDetails().size() <= 0) {
+                Toast.makeText(this, R.string.empty_cart_error, Toast.LENGTH_LONG).show();
+                return;
+            }
+
             Date createdDate = Calendar.getInstance().getTime();
             String address = addressEditText.getText().toString();
             String receiverName = receiverNameEditText.getText().toString();
@@ -147,7 +148,7 @@ public class CheckOutActivity extends AppCompatActivity {
                 return;
             }
 
-            if (shoppingCartViewModel.checkout(realm, shoppingCartViewModel.getCartDetails(realm, userName),
+            if (shoppingCartViewModel.checkout(realm, userName, shoppingCartViewModel.getCartDetails(realm, userName),
                     createdDate, address, receiverName, state, phoneNumber, totalPrice, userName)) {
                 Toast.makeText(this, "Order is saved", Toast.LENGTH_LONG).show();
             } else {
@@ -178,5 +179,14 @@ public class CheckOutActivity extends AppCompatActivity {
     protected void onDestroy() {
         realm.close();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent ShoppingCart = new Intent(this, ShoppingCartActivity.class);
+        realm.close();
+        finish();
+        startActivity(ShoppingCart);
     }
 }
