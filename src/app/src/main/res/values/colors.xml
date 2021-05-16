@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">	#DCDCDC</color>
+    <color name="tabSelectedIconColor">#F5BD02</color>
+    <color name="tabUnselectedIconColor">#FFFFFF</color>
 </resources>
