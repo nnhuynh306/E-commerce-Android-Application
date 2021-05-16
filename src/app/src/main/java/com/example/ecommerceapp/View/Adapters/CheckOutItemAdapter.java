@@ -33,7 +33,9 @@ public class CheckOutItemAdapter extends RecyclerView.Adapter<CheckOutItemAdapte
     Realm realm;
     List<CartDetail> cartDetails = new ArrayList<>();
 
-
+    public List<CartDetail> getCartDetails() {
+        return cartDetails;
+    }
 
     public CheckOutItemAdapter(Context context, ShoppingCartViewModel shoppingCartViewModel) {
         this.context = context;
