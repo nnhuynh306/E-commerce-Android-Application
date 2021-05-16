@@ -9,19 +9,23 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ecommerceapp.R;
+import com.example.ecommerceapp.RealmObjects.Account;
+import com.example.ecommerceapp.RealmObjects.Cart;
 import com.example.ecommerceapp.ViewModel.SignUpViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private boolean isSignUp;
+    private String email;
+    private String pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        EditText email = findViewById(R.id.editText_signup_email);
-        EditText password = findViewById(R.id.editText_signup_password);
-        EditText repass = findViewById(R.id.editText_signup_RePassword);
+        EditText emailText = findViewById(R.id.editText_signup_email);
+        EditText passwordText = findViewById(R.id.editText_signup_password);
+        EditText repassText = findViewById(R.id.editText_signup_RePassword);
 
         SignUpViewModel signUpViewModel = new SignUpViewModel(this);
 
@@ -31,10 +35,23 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgressDialog dialog = ProgressDialog.show(SignUpActivity.this, "",
                         "Loading. Please wait...", true);
-                isSignUp = signUpViewModel.signUp(email.getText().toString()
-                        ,password.getText().toString(), repass.getText().toString());
-                dialog.cancel();
-                signUpViewModel.status(isSignUp);
+                email = emailText.getText().toString();
+                pass = passwordText.getText().toString();
+
+                isSignUp = signUpViewModel.signUp(email
+                        ,pass, repassText.getText().toString());
+                if(isSignUp){
+                    dialog.cancel();
+                    signUpViewModel.status(true);
+
+                    Account account = new Account();
+                    account.set_id(email);
+                    account.setPassword(pass);
+                    Cart cart = new Cart(account);
+
+                } else {
+                    signUpViewModel.status(false);
+                }
             }
         });
     }

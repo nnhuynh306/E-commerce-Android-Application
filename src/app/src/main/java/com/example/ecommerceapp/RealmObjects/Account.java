@@ -79,6 +79,10 @@ public class Account extends RealmObject {
         this.password = password;
     }
 
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
