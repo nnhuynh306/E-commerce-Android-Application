@@ -43,4 +43,13 @@
     <string name="user_information_title">Information</string>
     <string name="user_order_title">Orders</string>
     <string name="user_security_title">Security</string>
+    <string name="username">Username</string>
+    <string name="name">Name</string>
+    <string name="dateOfBirth">Date Of Birth</string>
+    <string name="date">Date</string>
+    <string name="state">State</string>
+    <string name="id">ID</string>
+    <string name="change_password">Change password</string>
+    <string name="price">Price</string>
+    <string name="products">Products</string>
 </resources>

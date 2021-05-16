@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,61 +11,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:text="@string/username"
+            android:text="@string/receiver_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:layout_margin="5dp"
             />
         <TextView
-            android:id="@+id/userName"
-            android:hint="@string/text_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textSize="14sp"
-            />
-        <TextView
-            android:text="@string/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_margin="5dp"
-            />
-        <EditText
-            android:id="@+id/name"
-            android:inputType="text"
-            android:hint="@string/text_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textSize="14sp"
-            android:background="@drawable/edittext_rounded_border"/>
-        <TextView
-            android:text="@string/dateOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_margin="5dp"
-            />
-        <EditText
-            android:id="@+id/dob"
-            android:inputType="date"
-            android:hint="@string/text_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textSize="14sp"
-            android:background="@drawable/edittext_rounded_border"/>
-        <TextView
-            android:text="@string/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_margin="5dp"
-            />
-        <TextView
-            android:id="@+id/email"
+            android:id="@+id/receiver_name"
             android:hint="@string/text_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,15 +32,14 @@
             android:textStyle="bold"
             android:layout_margin="5dp"
             />
-        <EditText
-            android:id="@+id/phoneNumber"
-            android:inputType="phone"
+        <TextView
+            android:id="@+id/phone_number"
             android:hint="@string/text_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textSize="14sp"
-            android:background="@drawable/edittext_rounded_border"/>
+            />
         <TextView
             android:text="@string/address"
             android:layout_width="match_parent"
@@ -95,34 +47,70 @@
             android:textStyle="bold"
             android:layout_margin="5dp"
             />
-        <EditText
+        <TextView
             android:id="@+id/address"
             android:hint="@string/text_holder"
-            android:inputType="text"
-            android:imeOptions="actionDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textSize="14sp"
-            android:lines="1"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:background="@drawable/edittext_rounded_border"/>
-
-            <RelativeLayout
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/round_button"
-                    android:src="@drawable/check_icon"/>
-            </RelativeLayout>
+            />
+        <TextView
+            android:text="@string/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            />
+        <TextView
+            android:id="@+id/price"
+            android:hint="@string/text_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:text="@string/state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            />
+        <TextView
+            android:id="@+id/state"
+            android:hint="@string/text_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:text="@string/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            />
+        <TextView
+            android:id="@+id/date"
+            android:hint="@string/text_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:text="@string/products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
