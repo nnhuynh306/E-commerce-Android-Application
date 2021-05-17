@@ -51,13 +51,14 @@ public class UserPageMainFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle(userName);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.show();
     }
 
     private void setupTabLayout(View view) {
         mTabLayout = view.findViewById(R.id.tabLayout);
         mViewPager = view.findViewById(R.id.viewPager);
 
-        userPageViewPagerAdapter = new UserPageViewPagerAdapter(requireActivity().getSupportFragmentManager()
+        userPageViewPagerAdapter = new UserPageViewPagerAdapter(getChildFragmentManager()
                 , FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
         mViewPager.setAdapter(userPageViewPagerAdapter);
