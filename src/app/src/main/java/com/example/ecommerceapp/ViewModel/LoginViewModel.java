@@ -6,7 +6,11 @@ import android.widget.Toast;
 
 import androidx.databinding.BaseObservable;
 
-import com.example.ecommerceapp.controller.DB_Controller;
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
+
+import io.realm.mongodb.App;
+import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
 
 public class LoginViewModel extends BaseObservable {
 
@@ -15,27 +19,62 @@ public class LoginViewModel extends BaseObservable {
     private String errorMessage = "Email or Password is not valid";
     private String email;
     private String password;
-    private DB_Controller db_controller;
-
+    private User curUser;
+    private App app;
+    private RealmApp realmApp;
 
     public LoginViewModel(Context context) {
         this.context = context;
-        db_controller = new DB_Controller( context);
+        this.realmApp = new RealmApp(context);
+        this.app = realmApp.getApp();
     }
 
     public boolean login(String email, String password){
         this.email = email;
         this.password = password;
-        if (db_controller.login(email,password)){
+
+        Login threadLogin = new Login(this.email,this.password);
+        threadLogin.start();
+        synchronized (threadLogin){
+            try {
+                threadLogin.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if (curUser!=null && curUser.isLoggedIn()){
+            realmApp.setAccountID(curUser.getId());
             return true;
         }
         return false;
+
     }
     public void status(int loginStatus){
         if (loginStatus==1){
             Toast.makeText(context,successMessage,Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context,errorMessage,Toast.LENGTH_SHORT).show();
+        }
+    }
+    class Login extends Thread{
+        String email;
+        String pass;
+        public Login(String email, String pass){
+            this.email = email;
+            this.pass = pass;
+        }
+        @Override
+        public void run() {
+            synchronized (this){
+                try {
+                    super.run();
+                    Credentials credentials = Credentials.emailPassword(email,pass);
+                    curUser = app.login(credentials);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                notify();
+            }
         }
     }
 

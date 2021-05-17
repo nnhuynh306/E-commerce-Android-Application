@@ -64,6 +64,7 @@
     <string name="change_password_success">Password is changed</string>
     <string name="change_password_fail">ERROR: Your old password may be not matched</string>
     <string name="cant_find_account">ERROR: Can\'t find your account in database. Please try again next time or contach administrator</string>
+    <string name="passwordNotMatch">Password and Re password not match</string>
     <string name="admin_account_title">Accounts</string>
     <string name="account_product_title">Products</string>
     <string name="account_order_title">Orders</string>
