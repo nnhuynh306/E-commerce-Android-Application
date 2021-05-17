@@ -2,15 +2,38 @@ package com.example.ecommerceapp.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
+import com.example.ecommerceapp.RealmObjects.CartDetail;
+import com.example.ecommerceapp.RealmObjects.Product;
+import com.example.ecommerceapp.View.Adapters.ProductListItemAdapter;
+import com.example.ecommerceapp.ViewModel.ProductListViewModel;
+
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.mongodb.App;
+import io.realm.mongodb.Credentials;
+import io.realm.mongodb.sync.SyncConfiguration;
 
 public class ProductListActivity extends AppCompatActivity {
+
+    private ProductListViewModel productListViewModel;
+    private Realm realm;
+    private App app;
+    private RecyclerView recyclerViewProduct;
+    private ProductListItemAdapter productListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +42,38 @@ public class ProductListActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        app = new RealmApp(this).getApp();
+        Credentials anonymousCredentials = Credentials.anonymous();
+        productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
+        productListAdapter = new ProductListItemAdapter(this,productListViewModel);
+        recyclerViewProduct = findViewById(R.id.product_list);
+        recyclerViewProduct.setAdapter(productListAdapter);
+
+        app.loginAsync(anonymousCredentials, it -> {
+            if (it.isSuccess()) {
+                Log.v("AUTH", "Successfully authenticated anonymously.");
+
+                SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
+                        .allowQueriesOnUiThread(true)
+                        .allowWritesOnUiThread(true)
+                        .build();
+
+                Realm.getInstanceAsync(config, new Realm.Callback() {
+                    @Override
+                    public void onSuccess(Realm realm) {
+                        ProductListActivity.this.realm = realm;
+                        productListAdapter.setRealm(realm);
+                        if (productListViewModel.loadProductListDetails(realm)){
+                            List<Product> products = realm.copyFromRealm(productListViewModel.getProductListData());
+                            productListAdapter.setProductList(products);
+                        }
+                    }
+                });
+            }
+        });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,5 +107,10 @@ public class ProductListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onDestroy() {
+        realm.close();
+        super.onDestroy();
     }
 }

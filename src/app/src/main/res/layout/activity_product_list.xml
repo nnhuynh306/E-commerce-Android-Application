@@ -130,41 +130,14 @@
         tools:listitem="@layout/category_row_item" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_recycler"
+        android:id="@+id/product_list"
         android:layout_width="0dp"
         android:layout_height="550dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/cat_recycler"
-        tools:listitem="@layout/products_row_item" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="Login"
-        android:textColor="@color/black"
-        android:clickable="true"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView7"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/textView7" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:text="Sign up"
-        android:textColor="@color/black"
-        android:clickable="true"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/search_bar"
-        app:layout_constraintStart_toEndOf="@+id/search_bar"
-        app:layout_constraintTop_toTopOf="@+id/search_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/cat_recycler" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

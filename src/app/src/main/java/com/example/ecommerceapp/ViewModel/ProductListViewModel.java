@@ -15,13 +15,23 @@ import io.realm.RealmResults;
 import io.realm.RealmQuery;
 
 public class ProductListViewModel extends ViewModel {
-    private RealmResults<Product> ProductListLiveData;
+    private RealmResults<Product> ProductListData;
 
     public boolean loadProductListDetails(Realm realm) {
-        ProductListLiveData =  realm.where(Product.class).findAll();
-        return true;
+        AtomicBoolean flag = new AtomicBoolean(false);
+        realm.executeTransaction(realm1 -> {
+            try{
+                ProductListData =  realm.where(Product.class).findAll();
+                flag.set(true);
+            }
+            catch (NullPointerException e){
+                e.printStackTrace();
+                flag.set(false);
+            }
+            });
+        return flag.get();
     }
 
-    public RealmResults<Product> getProductListLiveData(){return ProductListLiveData;}
+    public RealmResults<Product> getProductListData(){return ProductListData;}
 
 }
