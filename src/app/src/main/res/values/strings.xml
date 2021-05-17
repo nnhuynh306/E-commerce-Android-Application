@@ -52,4 +52,8 @@
     <string name="change_password">Change password</string>
     <string name="price">Price</string>
     <string name="products">Products</string>
+    <string name="loading_data">Loading data...</string>
+    <string name="wrong_date_format">Unreconized date format</string>
+    <string name="date_format">dd/mm/yyyy</string>
+    <string name="saving">Saving...</string>
 </resources>

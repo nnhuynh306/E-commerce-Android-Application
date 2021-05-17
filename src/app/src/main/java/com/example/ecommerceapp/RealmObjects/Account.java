@@ -75,6 +75,10 @@ public class Account extends RealmObject {
         return email;
     }
 
+    public String get_id() {
+        return this._id;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }

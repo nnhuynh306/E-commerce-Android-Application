@@ -51,7 +51,7 @@
         <EditText
             android:id="@+id/dob"
             android:inputType="date"
-            android:hint="@string/text_holder"
+            android:hint="@string/date_format"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
@@ -116,6 +116,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageButton
+                    android:id="@+id/save_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_centerInParent="true"
