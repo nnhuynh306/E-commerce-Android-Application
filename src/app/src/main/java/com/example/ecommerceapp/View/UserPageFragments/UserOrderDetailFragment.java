@@ -61,6 +61,10 @@ public class UserOrderDetailFragment extends Fragment {
         TextView orderIdView = view.findViewById(R.id.orderId);
         orderIdView.setText(orderId);
 
+        view.findViewById(R.id.back_button).setOnClickListener(v -> {
+            Navigation.findNavController(view).popBackStack();
+        });
+
         orderViewModel.getOrder(requireContext(), orderId);
         orderViewModel.getOrderMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Order>() {
             @Override
