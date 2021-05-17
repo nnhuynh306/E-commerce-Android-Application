@@ -3,6 +3,7 @@ package com.example.ecommerceapp.controller;
 import android.content.Context;
 import android.os.Looper;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 
 import io.realm.mongodb.App;
@@ -16,8 +17,7 @@ public class DB_Controller {
     private User curUser;
     public DB_Controller(Context context){
         this.context = context;
-        String appID = context.getString(R.string.realm_app_id);
-        this.app = new App(new AppConfiguration.Builder(appID).build());
+        this.app = new RealmApp(context).getApp();
     }
 
     public boolean login(String email, String pass){
