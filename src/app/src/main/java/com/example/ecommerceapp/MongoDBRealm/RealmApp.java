@@ -9,6 +9,7 @@ import io.realm.mongodb.AppConfiguration;
 
 public class RealmApp {
     private static App app = null;
+    private static String accountID = null;
 
     public RealmApp(Context context) {
         if (app == null) {
@@ -19,5 +20,13 @@ public class RealmApp {
 
     public App getApp() {
         return app;
+    }
+
+    public void setAccountID(String accountID) {
+        RealmApp.accountID = accountID;
+    }
+
+    public String getAccountID() {
+        return accountID;
     }
 }

@@ -32,36 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String appID = getString(R.string.realm_app_id); // replace this with your App ID
-        App app = new App(new AppConfiguration.Builder(appID).build());
-
-        Credentials anonymousCredentials = Credentials.anonymous();
-        AtomicReference<User> user = new AtomicReference<User>();
-        app.loginAsync(anonymousCredentials, it -> {
-            if (it.isSuccess()) {
-                Log.v("AUTH", "Successfully authenticated anonymously.");
-                user.set(app.currentUser());
-
-                SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
-                        .allowQueriesOnUiThread(true)
-                        .allowWritesOnUiThread(true)
-                        .build();
-
-                Realm.getInstanceAsync(config, new Realm.Callback() {
-                    @Override
-                    public void onSuccess(Realm realm) {
-                        Log.v("EXAMPLE", "Successfully opened a realm.");
-                        
-                        realm.close();
-                    }
-                });
-
-            } else {
-                Log.e("AUTH", it.getError().toString());
-            }
-        });
-
-
-
+        new LoginAnonymous(this).run();
     }
 }

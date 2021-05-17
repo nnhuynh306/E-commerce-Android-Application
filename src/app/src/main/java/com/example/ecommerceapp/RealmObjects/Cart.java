@@ -34,4 +34,8 @@ public class Cart extends RealmObject {
     public Account getUser() {
         return account;
     }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }
