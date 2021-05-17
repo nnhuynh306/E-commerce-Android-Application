@@ -38,4 +38,30 @@
     <string name="empty_cart_error">Your cart doesn\'t have any items</string>
     <string name="reset_pass">RESET ACCOUNT</string>
     <string name="new_password">New Password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_information_title">Information</string>
+    <string name="user_order_title">Orders</string>
+    <string name="user_security_title">Security</string>
+    <string name="username">Username</string>
+    <string name="name">Name</string>
+    <string name="dateOfBirth">Date Of Birth</string>
+    <string name="date">Date</string>
+    <string name="state">State</string>
+    <string name="id">ID</string>
+    <string name="change_password">Change password</string>
+    <string name="price">Price</string>
+    <string name="products">Products</string>
+    <string name="loading_data">Loading data...</string>
+    <string name="wrong_date_format">Unreconized date format</string>
+    <string name="date_format">dd/mm/yyyy</string>
+    <string name="saving">Saving...</string>
+    <string name="old_password">Old password</string>
+    <string name="renew_password">Enter new password again</string>
+    <string name="empty_old_pass">Old password can\'t be empty</string>
+    <string name="empty_new_pass">New password can\'t be empty</string>
+    <string name="renew_pass_wrong">Re-enter new password is not matched with new password</string>
+    <string name="change_password_success">Password is changed</string>
+    <string name="change_password_fail">ERROR: Your old password may be not matched</string>
+    <string name="cant_find_account">ERROR: Can\'t find your account in database. Please try again next time or contach administrator</string>
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_sample.xml"
+    app:startDestination="@id/userPageMainFragment">
+
+    <fragment
+        android:id="@+id/userPageMainFragment"
+        android:name="com.example.ecommerceapp.View.UserPageFragments.UserPageMainFragment"
+        android:label="UserPageMainFragment" >
+        <action
+            android:id="@+id/action_userPageMainFragment_to_userOrderDetailFragment"
+            app:destination="@id/userOrderDetailFragment" />
+        <action
+            android:id="@+id/action_userPageMainFragment_to_userPageResetPasswordFragment"
+            app:destination="@id/userPageResetPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userOrderDetailFragment"
+        android:name="com.example.ecommerceapp.View.UserPageFragments.UserOrderDetailFragment"
+        android:label="UserOrderDetailFragment" >
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPageResetPasswordFragment"
+        android:name="com.example.ecommerceapp.View.UserPageFragments.UserPageResetPasswordFragment"
+        android:label="fragment_user_page_reset_password"
+        tools:layout="@layout/fragment_user_page_reset_password" />
+</navigation>
