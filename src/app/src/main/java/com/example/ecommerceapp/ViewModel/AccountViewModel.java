@@ -65,6 +65,34 @@ public class AccountViewModel extends AndroidViewModel {
         });
     }
 
+    public void changePassword(Context context, String userName, String oldPassword, String newPassword,  Handler handler) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                realm.executeTransactionAsync(r -> {
+                    Account account = r.where(Account.class).equalTo("_id", userName).findFirst();
+                    if (account != null) {
+                        if (!account.getPassword().equals(oldPassword)) {
+                            handler.sendEmptyMessage(0);
+                        } else {
+                            account.setPassword(newPassword);
+                            handler.sendEmptyMessage(1);
+                        }
+                    } else {
+                        handler.sendEmptyMessage(-1);
+                    }
+                });
+
+                realm.close();
+            }
+        });
+    }
+
     public MutableLiveData<Account> getAccountLiveData() {
         return accountLiveData;
     }

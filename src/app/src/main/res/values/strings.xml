@@ -56,4 +56,12 @@
     <string name="wrong_date_format">Unreconized date format</string>
     <string name="date_format">dd/mm/yyyy</string>
     <string name="saving">Saving...</string>
+    <string name="old_password">Old password</string>
+    <string name="renew_password">Enter new password again</string>
+    <string name="empty_old_pass">Old password can\'t be empty</string>
+    <string name="empty_new_pass">New password can\'t be empty</string>
+    <string name="renew_pass_wrong">Re-enter new password is not matched with new password</string>
+    <string name="change_password_success">Password is changed</string>
+    <string name="change_password_fail">ERROR: Your old password may be not matched</string>
+    <string name="cant_find_account">ERROR: Can\'t find your account in database. Please try again next time or contach administrator</string>
 </resources>
