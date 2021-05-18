@@ -152,8 +152,17 @@ public class ShoppingCartViewModel extends AndroidViewModel {
                             Log.d("ADD TO CART", "fail product: ");
                             handler.sendEmptyMessage(0);
                         } else {
-                            r.insertOrUpdate(new CartDetail(cart, product, quantity));
-                            Log.d("ADD TO CART", "onSuccess: ");
+
+                            CartDetail cartDetail = r.where(CartDetail.class).equalTo("cart.account._id", username)
+                                    .and().equalTo("product._id", new ObjectId(productId)).findFirst();
+                            if (cartDetail == null) {
+                                Log.d("ADD TO CART", "add product: ");
+                                r.insertOrUpdate(new CartDetail(cart, product, quantity));
+                            } else {
+                                Log.d("ADD TO CART", "update product: ");
+                                cartDetail.setQuantity(cartDetail.getQuantity() + quantity);
+                            }
+
                             handler.sendEmptyMessage(1);
                         }
                     }
