@@ -17,6 +17,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Account;
@@ -71,6 +72,55 @@ public class AdminAccountFragment extends Fragment {
                     }
                 }
             }
+        });
+
+        view.findViewById(R.id.search_button).setOnClickListener(v -> {
+            String searchStr = ((TextView) view.findViewById(R.id.search_text)).getText().toString();
+
+            if (searchStr.trim().isEmpty()) {
+                viewModel.loadAllAccounts(requireContext(), new Handler() {
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        super.handleMessage(msg);
+
+                        switch (msg.what) {
+                            case 1: {
+                                viewModel.getAllAccountsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Account>>() {
+                                    @Override
+                                    public void onChanged(List<Account> accounts) {
+                                        adminAccountManagerAdapter.setAccount(accounts);
+                                    }
+                                });
+                            }
+                            default: {
+
+                            }
+                        }
+                    }
+                });
+                return;
+            }
+
+            viewModel.loadSearchedAccount(requireContext(), searchStr, new Handler() {
+                @Override
+                public void handleMessage(@NonNull Message msg) {
+                    super.handleMessage(msg);
+
+                    switch (msg.what) {
+                        case 1: {
+                            viewModel.getAllAccountsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Account>>() {
+                                @Override
+                                public void onChanged(List<Account> accounts) {
+                                    adminAccountManagerAdapter.setAccount(accounts);
+                                }
+                            });
+                        }
+                        default: {
+
+                        }
+                    }
+                }
+            });
         });
     }
 

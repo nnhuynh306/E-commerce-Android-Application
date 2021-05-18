@@ -120,6 +120,25 @@ public class AccountViewModel extends AndroidViewModel {
         });
     }
 
+    public void loadSearchedAccount(Context context, String searchStr, Handler handler) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                realm.executeTransaction(r -> {
+                    allAccountsLiveData = new LiveRealmResults<Account>(r.where(Account.class).contains("_id",searchStr.toLowerCase()).findAll());
+
+                    handler.sendEmptyMessage(1);
+                });
+
+            }
+        });
+    }
+
     public void deleteAccount(Context context, Account account) {
         SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
                 .allowQueriesOnUiThread(true)
