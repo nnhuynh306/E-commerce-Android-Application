@@ -53,26 +53,20 @@ public class ProductListActivity extends AppCompatActivity {
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewProduct.setAdapter(productListAdapter);
 
-        app.loginAsync(anonymousCredentials, it -> {
-            if (it.isSuccess()) {
-                Log.v("AUTH", "Successfully authenticated anonymously.");
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
 
-                SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
-                        .allowQueriesOnUiThread(true)
-                        .allowWritesOnUiThread(true)
-                        .build();
-
-                Realm.getInstanceAsync(config, new Realm.Callback() {
-                    @Override
-                    public void onSuccess(Realm realm) {
-                        ProductListActivity.this.realm = realm;
-                        productListAdapter.setRealm(realm);
-                        if (productListViewModel.loadProductListDetails(realm)){
-                            List<Product> products = realm.copyFromRealm(productListViewModel.getProductListData());
-                            productListAdapter.setProductList(products);
-                        }
-                    }
-                });
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                ProductListActivity.this.realm = realm;
+                productListAdapter.setRealm(realm);
+                if (productListViewModel.loadProductListDetails(realm)){
+                    List<Product> products = realm.copyFromRealm(productListViewModel.getProductListData());
+                    productListAdapter.setProductList(products);
+                }
             }
         });
 

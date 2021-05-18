@@ -104,6 +104,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("id", product.getId().toString());
                 bundle.putString("name", product.getName());
                 bundle.putString("description",product.getDescription());
                 bundle.putDouble("price", product.getPrice());

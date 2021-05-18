@@ -70,17 +70,13 @@ public class CheckOutActivity extends AppCompatActivity {
 
         shoppingCartViewModel = new ViewModelProvider(this).get(ShoppingCartViewModel.class);
 
-
-        String userName = "admin";
-
         realmApp = new RealmApp(this);
         app = realmApp.getApp();
+        String userName = realmApp.getAccountID();
 
         addressEditText = findViewById(R.id.address);
         phoneNumberEditText = findViewById(R.id.phoneNumber);
         receiverNameEditText = findViewById(R.id.receiverName);
-
-        Credentials anonymousCredentials = Credentials.anonymous();
 
 
         cartView = findViewById(R.id.cart_list);
