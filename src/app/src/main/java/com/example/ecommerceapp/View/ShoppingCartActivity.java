@@ -48,6 +48,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     App app;
 
+    String returnActivityName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +57,19 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         shoppingCartViewModel = new ViewModelProvider(this).get(ShoppingCartViewModel.class);
 
-        String userName = "admin";
-
         realmApp = new RealmApp(this);
         app = realmApp.getApp();
+
+        returnActivityName = getIntent().getStringExtra("returnActivityName");
+
+        String userName = realmApp.getAccountID();
+
+        if (userName == null) {
+            Intent login = new Intent(this, LoginActivity.class);
+            login.putExtra("forwardActivityName", "ShoppingCartActivity");
+            finish();
+            startActivity(login);
+        }
 
         Credentials anonymousCredentials = Credentials.anonymous();
 
@@ -145,7 +156,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        backToPreviousActivityIfPossible();
 
     }
 
@@ -157,5 +168,27 @@ public class ShoppingCartActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.anonymous_toolbar,menu);
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void backToPreviousActivityIfPossible() {
+        if (returnActivityName == null) {
+            Intent intent = new Intent(this, ProductListActivity.class);
+            startActivity(intent);
+        } else if (returnActivityName.equalsIgnoreCase("ProductDetailActivity")) {
+            Intent intent = new Intent(this, ProductDetailActivity.class);
+            startActivity(intent);
+        } else if (returnActivityName.equalsIgnoreCase("ProductListActivity")) {
+            Intent intent = new Intent(this, ProductListActivity.class);
+            startActivity(intent);
+        } else if (returnActivityName.equalsIgnoreCase("CheckOutActivity")) {
+            Intent intent = new Intent(this, CheckOutActivity.class);
+            startActivity(intent);
+        } else if (returnActivityName.equalsIgnoreCase("UserPageActivity")) {
+            Intent intent = new Intent(this, UserPageActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, ProductListActivity.class);
+            startActivity(intent);
+        }
     }
 }
