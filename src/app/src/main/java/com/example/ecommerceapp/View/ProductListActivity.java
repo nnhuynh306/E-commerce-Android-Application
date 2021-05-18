@@ -3,6 +3,7 @@ package com.example.ecommerceapp.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class ProductListActivity extends AppCompatActivity {
         productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
         productListAdapter = new ProductListItemAdapter(this,productListViewModel);
         recyclerViewProduct = findViewById(R.id.product_list);
+        recyclerViewProduct.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewProduct.setAdapter(productListAdapter);
 
         app.loginAsync(anonymousCredentials, it -> {
@@ -81,11 +83,13 @@ public class ProductListActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                productListAdapter.setSearchQuery(s.toString());
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                productListAdapter.setSearchQuery(s.toString());
+                recyclerViewProduct.setAdapter(productListAdapter);
             }
         });
 

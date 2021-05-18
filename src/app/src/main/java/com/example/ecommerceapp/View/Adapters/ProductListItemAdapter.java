@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Product;
 import com.example.ecommerceapp.View.ProductDetailActivity;
+import com.example.ecommerceapp.View.ProductListActivity;
 import com.example.ecommerceapp.ViewModel.ProductListViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,12 +34,13 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
     Realm realm;
     App app;
     List<Product> productList = new ArrayList<>();
-
+    List<Product> queryItems = new ArrayList<>();
 
     String searchQuery;
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+        this.queryItems = productList;
         notifyDataSetChanged();
     }
 
@@ -45,7 +48,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
     public ProductListItemAdapter(Context context, ProductListViewModel productListViewModel) {
         this.context = context;
         this.productListViewModel = productListViewModel;
-        searchQuery = null;
+        searchQuery = "";
     }
 
     public void setApp(App app) {
@@ -61,14 +64,17 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
         this.searchQuery = searchQuery;
 
         if(!searchQuery.isEmpty()){
-            List<Product> queryItem = new ArrayList<>();
+            List<Product> tempList = new ArrayList<>();
             for(int i = 0; i < productList.size(); i++){
-                if (productList.get(i).getName().contains(searchQuery))
-                    queryItem.add(productList.get(i));
+                if (productList.get(i).getName().toLowerCase().contains(searchQuery.toLowerCase()))
+                    tempList.add(productList.get(i));
             }
-            productList = queryItem;
-            notifyDataSetChanged();
+            productList = tempList;
         }
+        else {
+            productList = queryItems;
+        }
+        notifyDataSetChanged();
     }
 
 
@@ -76,13 +82,13 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        return new ProductListItemAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.products_row_item, parent, false));
+        View item = LayoutInflater.from(context).inflate(R.layout.products_row_item,parent,false);
+        return new ViewHolder(item);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ProductListItemAdapter.ViewHolder holder, int position) {
         Product product = this.productList.get(position);
-
 
         Glide.with(context)
                 .load(R.drawable.image_holder)
@@ -96,7 +102,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
         holder.productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context , ProductDetailActivity.class);
+                Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("name", product.getName());
                 bundle.putString("description",product.getDescription());
@@ -107,7 +113,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
                 intent.putExtras(bundle);
 
                 realm.close();
-                context.startActivity(intent);
+                v.getContext().startActivity(intent);
             }
         });
     }
@@ -119,7 +125,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageButton productImage;
+        private ImageView productImage;
         private TextView productName;
         private TextView productPrice;
         private TextView productQuantity;

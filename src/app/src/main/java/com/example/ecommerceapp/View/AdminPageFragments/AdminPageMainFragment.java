@@ -44,7 +44,7 @@ public class AdminPageMainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userName = "admin";
+        userName = "ADMIN PAGE";
         setupActionBar();
         setupTabLayout(view);
     }

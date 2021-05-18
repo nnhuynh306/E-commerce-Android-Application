@@ -3,6 +3,7 @@ package com.example.ecommerceapp.ViewModel;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -63,6 +64,81 @@ public class OrderViewModel extends AndroidViewModel {
             public void onSuccess(Realm realm) {
                 Order order = realm.where(Order.class).equalTo("_id", new ObjectId(orderId)).findFirst();
                 orderMutableLiveData.setValue(order);
+                realm.close();
+            }
+        });
+    }
+
+    public void loadAllOrders(Context context, Handler handler) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                RealmResults<Order> orders = realm.where(Order.class).findAll();
+                orderLiveRealmResults = new LiveRealmResults<>(orders);
+                handler.sendEmptyMessage(1);
+            }
+        });
+    }
+
+    public void deleteOrder(Context context, String orderId, Handler handler) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                realm.executeTransaction(r -> {
+                    Order order = r.where(Order.class).equalTo("_id", new ObjectId(orderId)).findFirst();
+
+                    if (order != null) {
+                        order.deleteFromRealm();
+                        handler.sendEmptyMessage(1);
+                    } else {
+                        handler.sendEmptyMessage(0);
+                    }
+                });
+
+                realm.close();
+            }
+        });
+    }
+
+    public void changeOrderState(Context context, String orderId, String newState, Handler handler) {
+
+        if (!newState.equalsIgnoreCase("unconfirmed")
+        && !newState.equalsIgnoreCase("confirmed")
+        && !newState.equalsIgnoreCase("delivering")
+        && !newState.equalsIgnoreCase("delivered")) {
+            handler.sendEmptyMessage(-1);
+            return;
+        }
+
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                realm.executeTransaction(r -> {
+                    Order order = r.where(Order.class).equalTo("_id", new ObjectId(orderId)).findFirst();
+
+                    if (order != null) {
+                        order.setState(newState.toUpperCase());
+                        handler.sendEmptyMessage(1);
+                    } else {
+                        handler.sendEmptyMessage(0);
+                    }
+                });
+
                 realm.close();
             }
         });
