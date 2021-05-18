@@ -32,5 +32,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                 extras.getString("description"),
                 extras.getString("picture"),
                 new ProductCategory(extras.getString("category")));
+
+        productName.setText(product.getName());
+        productCategory.setText(product.getCategory().getName());
+        productDescription.setText(product.getDescription());
+        productQuantity.setText(product.getQuantity());
+        productPrice.setText(product.getPrice().toString());
     }
 }
