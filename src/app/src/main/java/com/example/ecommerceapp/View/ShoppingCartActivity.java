@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     ShoppingCartAdapter cartAdapter;
 
+    RealmApp realmApp;
+
+    App app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +55,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         shoppingCartViewModel = new ViewModelProvider(this).get(ShoppingCartViewModel.class);
 
-//        toolbar = findViewById(R.id.toolbar);
-
         String userName = "admin";
 
-        App app = new RealmApp(this).getApp();
+        realmApp = new RealmApp(this);
+        app = realmApp.getApp();
 
         Credentials anonymousCredentials = Credentials.anonymous();
 
@@ -143,5 +147,15 @@ public class ShoppingCartActivity extends AppCompatActivity {
         super.onBackPressed();
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(realmApp.getAccountID()!=null){
+            getMenuInflater().inflate(R.menu.logged_toolbar, menu);
+        }else {
+            getMenuInflater().inflate(R.menu.anonymous_toolbar,menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 }

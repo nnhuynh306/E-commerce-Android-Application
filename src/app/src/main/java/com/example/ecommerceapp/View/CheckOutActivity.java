@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,6 +59,10 @@ public class CheckOutActivity extends AppCompatActivity {
 
     EditText addressEditText, phoneNumberEditText, receiverNameEditText;
 
+    App app;
+
+    RealmApp realmApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +70,11 @@ public class CheckOutActivity extends AppCompatActivity {
 
         shoppingCartViewModel = new ViewModelProvider(this).get(ShoppingCartViewModel.class);
 
-//        toolbar = findViewById(R.id.toolbar);
 
         String userName = "admin";
 
-        App app = new RealmApp(this).getApp();
+        realmApp = new RealmApp(this);
+        app = realmApp.getApp();
 
         addressEditText = findViewById(R.id.address);
         phoneNumberEditText = findViewById(R.id.phoneNumber);
@@ -188,5 +193,14 @@ public class CheckOutActivity extends AppCompatActivity {
         realm.close();
         finish();
         startActivity(ShoppingCart);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(realmApp.getAccountID()!=null){
+            getMenuInflater().inflate(R.menu.logged_toolbar,menu);
+        }else {
+            getMenuInflater().inflate(R.menu.anonymous_toolbar,menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 }

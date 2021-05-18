@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ecommerceapp.R;
@@ -31,5 +32,10 @@ public class AdminPageActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.admin_toolbar,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
