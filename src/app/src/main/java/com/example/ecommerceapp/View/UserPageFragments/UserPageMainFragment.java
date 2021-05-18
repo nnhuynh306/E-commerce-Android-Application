@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.View.Adapters.UserPageViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -42,7 +43,7 @@ public class UserPageMainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userName = "admin";
+        userName = new RealmApp(requireContext()).getAccountID();
         setupActionBar();
         setupTabLayout(view);
     }

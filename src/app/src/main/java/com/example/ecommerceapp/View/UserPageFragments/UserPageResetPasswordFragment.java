@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.ViewModel.AccountViewModel;
 
@@ -48,7 +49,7 @@ public class UserPageResetPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String userName = "admin";
+        String userName = new RealmApp(requireContext()).getAccountID();
 
         setupActionBar(view);
         setupView(view);

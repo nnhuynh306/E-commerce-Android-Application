@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Order;
 import com.example.ecommerceapp.View.Adapters.OrdersAdapter;
@@ -54,7 +55,7 @@ public class UserOrderFragment extends Fragment {
         ordersAdapter = new OrdersAdapter(requireContext(), Navigation.findNavController(view));
         recyclerView.setAdapter(ordersAdapter);
 
-        String userName = "admin";
+        String userName = new RealmApp(requireContext()).getAccountID();
 
         Log.d("ORDER", "onViewCreated: ");
 

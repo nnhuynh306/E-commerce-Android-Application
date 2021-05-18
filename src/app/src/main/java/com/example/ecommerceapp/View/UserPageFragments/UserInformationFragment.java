@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Account;
 import com.example.ecommerceapp.Util.DateFormat;
@@ -55,7 +56,7 @@ public class UserInformationFragment extends Fragment {
         ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
         accountViewModel = viewModelProvider.get(AccountViewModel.class);
 
-        String userName = "admin";
+        String userName = new RealmApp(requireContext()).getAccountID();
 
         setupView(view);
 
@@ -100,6 +101,7 @@ public class UserInformationFragment extends Fragment {
         phoneNumberView = view.findViewById(R.id.phoneNumber);
         dobView = view.findViewById(R.id.dob);
         addressView = view.findViewById(R.id.address);
+
     }
 
     private void setupViewContent(Account account) {
