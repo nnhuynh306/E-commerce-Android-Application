@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.ecommerceapp.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AdminPageActivity extends AppCompatActivity {
 
@@ -22,6 +25,16 @@ public class AdminPageActivity extends AppCompatActivity {
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
+
+        FloatingActionButton home = findViewById(R.id.admin_home);
+        home.bringToFront();
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent product_List = new Intent(AdminPageActivity.this, ProductListActivity.class);
+                startActivity(product_List);
+            }
+        });
     }
 
     @Override
@@ -38,4 +51,7 @@ public class AdminPageActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.admin_toolbar,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+
+
 }

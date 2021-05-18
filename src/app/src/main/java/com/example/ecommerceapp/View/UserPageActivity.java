@@ -1,8 +1,11 @@
 package com.example.ecommerceapp.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.ecommerceapp.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UserPageActivity extends AppCompatActivity {
     @Override
@@ -21,6 +25,16 @@ public class UserPageActivity extends AppCompatActivity {
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
+
+        FloatingActionButton home = findViewById(R.id.user_home);
+        home.bringToFront();
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent product_List = new Intent(UserPageActivity.this, ProductListActivity.class);
+                startActivity(product_List);
+            }
+        });
     }
 
     @Override

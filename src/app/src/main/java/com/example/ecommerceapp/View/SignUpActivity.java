@@ -51,12 +51,21 @@ public class SignUpActivity extends AppCompatActivity {
                 email = emailText.getText().toString().toLowerCase();
                 pass = passwordText.getText().toString();
 
-                if(repassText.getText().toString().compareTo(passwordText.getText().toString())!=0)
-                {
+
+                if(repassText.getText().toString().compareTo(pass)!=0) {
+                    dialog.cancel();
                     status.setVisibility(View.VISIBLE);
                     status.setText("Password and re password not match!!");
+
+                } else if (pass.length()<6 || pass.length()>128){
                     dialog.cancel();
-                } else {
+                    status.setVisibility(View.VISIBLE);
+                    status.setText("Password must between 6 and 128 char");
+                }else if (email.isEmpty()){
+                    dialog.cancel();
+                    status.setVisibility(View.VISIBLE);
+                    status.setText("Email empty!!!");
+                }else {
                     if(signUpViewModel.signUp(email,pass)){
                         dialog.cancel();
                         signUpViewModel.status(true);
@@ -74,6 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Intent login = new Intent(SignUpActivity.this, LoginActivity.class);
                 login.putExtra("returnActivityName", returnActivityName);
                 login.putExtra("forwardActivityName", forwardActivityName);
+                SignUpActivity.this.finish();
                 startActivity(login);
             }
         });
@@ -86,45 +96,40 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void ForwardToNextActivity() {
+        Intent intent;
         if (forwardActivityName == null) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("CheckOutActivity")) {
-            Intent intent = new Intent(this, CheckOutActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, CheckOutActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("ProductDetailActivity")) {
-            Intent intent = new Intent(this, ProductDetailActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductDetailActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("ProductListActivity")) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("ShoppingCartActivity")) {
-            Intent intent = new Intent(this, ShoppingCartActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ShoppingCartActivity.class);
         } else {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         }
+        SignUpActivity.this.finish();
+        startActivity(intent);
     }
 
     private void backToPreviousActivityIfPossible() {
+        Intent intent;
         if (returnActivityName == null) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("ProductDetailActivity")) {
-            Intent intent = new Intent(this, ProductDetailActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductDetailActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("ProductListActivity")) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("LoginActivity")) {
-            Intent intent = new Intent(this, LoginActivity.class);
+            intent = new Intent(this, LoginActivity.class);
             intent.putExtra("returnActivityName", returnActivityName);
             intent.putExtra("forwardActivityName", forwardActivityName);
-            startActivity(intent);
         } else {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         }
+        SignUpActivity.this.finish();
+        startActivity(intent);
     }
 }

@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent signup = new Intent(LoginActivity.this, SignUpActivity.class);
                 signup.putExtra("returnActivityName", "LoginActivity");
                 signup.putExtra("forwardActivityName", forwardActivityName);
+                LoginActivity.this.finish();
                 startActivity(signup);
             }
         });
@@ -80,40 +81,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ForwardToNextActivity() {
+        Intent intent;
         if (forwardActivityName == null) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("CheckOutActivity")) {
-            Intent intent = new Intent(this, CheckOutActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, CheckOutActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("ProductDetailActivity")) {
-            Intent intent = new Intent(this, ProductDetailActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductDetailActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("ProductListActivity")) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (forwardActivityName.equalsIgnoreCase("ShoppingCartActivity")) {
-            Intent intent = new Intent(this, ShoppingCartActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ShoppingCartActivity.class);
         } else {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         }
+        LoginActivity.this.finish();
+        startActivity(intent);
     }
 
     private void backToPreviousActivityIfPossible() {
+        Intent intent;
         if (returnActivityName == null) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("ProductDetailActivity")) {
-            Intent intent = new Intent(this, ProductDetailActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductDetailActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("ProductListActivity")) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         }
+        LoginActivity.this.finish();
+        startActivity(intent);
     }
 }

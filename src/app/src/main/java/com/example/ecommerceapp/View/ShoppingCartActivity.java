@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.View.Adapters.ShoppingCartAdapter;
 import com.example.ecommerceapp.ViewModel.ShoppingCartViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -109,6 +111,18 @@ public class ShoppingCartActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton home = (FloatingActionButton) findViewById(R.id.cart_home);
+        home.bringToFront();
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent product_List = new Intent(ShoppingCartActivity.this, ProductListActivity.class);
+                ShoppingCartActivity.this.finish();
+                startActivity(product_List);
+
+            }
+        });
+
         assert getSupportActionBar()!=null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.shopping_cart);
@@ -145,6 +159,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
         bd = BigDecimal.valueOf(totalPrice);
         bd = bd.setScale(decimalPlaces, RoundingMode.HALF_UP);
         totalPriceView.setText(String.valueOf(bd.doubleValue()));
+
+
     }
 
     @Override
@@ -171,24 +187,21 @@ public class ShoppingCartActivity extends AppCompatActivity {
     }
 
     private void backToPreviousActivityIfPossible() {
+        Intent intent;
         if (returnActivityName == null) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("ProductDetailActivity")) {
-            Intent intent = new Intent(this, ProductDetailActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductDetailActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("ProductListActivity")) {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("CheckOutActivity")) {
-            Intent intent = new Intent(this, CheckOutActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, CheckOutActivity.class);
         } else if (returnActivityName.equalsIgnoreCase("UserPageActivity")) {
-            Intent intent = new Intent(this, UserPageActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, UserPageActivity.class);
         } else {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, ProductListActivity.class);
         }
+        ShoppingCartActivity.this.finish();
+        startActivity(intent);
     }
 }
