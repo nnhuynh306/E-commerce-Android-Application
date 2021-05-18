@@ -27,10 +27,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="450dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
 
@@ -38,8 +38,8 @@
             android:id="@+id/prod_category_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="360dp"
             android:gravity="center"
             android:text="Category"
             android:textSize="15sp"
@@ -63,13 +63,13 @@
             android:id="@+id/prod_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:text="Chanel"
             android:textColor="@android:color/background_dark"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/prod_price"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/prod_category_title"
             app:layout_constraintTop_toBottomOf="@+id/prod_qty_title" />
 
@@ -89,11 +89,12 @@
             android:id="@+id/prod_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:lineSpacingExtra="2dp"
             android:text="@string/lorem"
             android:textColor="@android:color/background_dark"
             app:layout_constraintEnd_toEndOf="@+id/prod_price"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/prod_name"
             app:layout_constraintTop_toBottomOf="@+id/prod_name" />
 
@@ -103,12 +104,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/prod_description"
-            app:layout_constraintTop_toTopOf="@+id/button2" />
+            app:layout_constraintTop_toTopOf="@+id/btn_add_to_cart" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/quantity_choose"
             android:layout_width="50dp"
             android:layout_height="53dp"
+            android:layout_marginStart="56dp"
             android:gravity="center"
             android:text="1"
             android:textColor="@android:color/background_dark"
@@ -116,27 +118,15 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintStart_toEndOf="@+id/imageView8"
             app:layout_constraintTop_toTopOf="@+id/imageView8"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.716" />
 
         <ImageView
             android:id="@+id/imageView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textView14"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="@+id/textView14" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="180dp"
-            android:layout_height="60dp"
-            android:padding="16dp"
-            android:paddingRight="16dp"
-            android:text="Add to Cart"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/quantity_choose"
+            app:layout_constraintStart_toEndOf="@+id/quantity_choose"
+            app:layout_constraintTop_toTopOf="@+id/quantity_choose" />
 
         <TextView
             android:id="@+id/prod_qty_title"
@@ -159,12 +149,51 @@
             app:layout_constraintStart_toEndOf="@+id/prod_qty_title"
             app:layout_constraintTop_toBottomOf="@+id/prod_category_title"
             app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/increaseProductDetailQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/quantity_choose"
+            app:layout_constraintStart_toStartOf="@+id/imageView9"
+            app:layout_constraintTop_toTopOf="@+id/quantity_choose"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/arrow_right_icon_black" />
+
+        <ImageButton
+            android:id="@+id/decreaseProductDetailQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/quantity_choose"
+            app:layout_constraintEnd_toStartOf="@+id/quantity_choose"
+            app:layout_constraintTop_toTopOf="@+id/quantity_choose"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/arrow_left_icon_black" />
+
+        <Button
+            android:id="@+id/btn_add_to_cart"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:padding="16dp"
+            android:paddingRight="16dp"
+            android:text="Add to Cart"
+
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.949"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="256dp"
-        android:layout_height="447dp"
+        android:id="@+id/prod_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
