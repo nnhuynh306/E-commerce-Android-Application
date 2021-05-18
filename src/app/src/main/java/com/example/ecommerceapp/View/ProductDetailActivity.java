@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -128,5 +129,34 @@ public class ProductDetailActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.anonymous_toolbar,menu);
         }
         return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case  R.id.profile:
+                Intent profile = new Intent(this, UserPageActivity.class);
+                finish();
+                startActivity(profile);
+                break;
+            case R.id.login:
+                Intent login = new Intent(this, LoginActivity.class);
+                finish();
+                startActivity(login);
+                break;
+            case R.id.signup:
+                Intent signUp = new Intent(this, SignUpActivity.class);
+                finish();
+                startActivity(signUp);
+                break;
+            case R.id.cart:
+                Intent shoppingCart = new Intent(this, ShoppingCartActivity.class);
+                finish();
+                startActivity(shoppingCart);
+                break;
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
