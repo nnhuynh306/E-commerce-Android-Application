@@ -91,6 +91,7 @@ public class AdminAccountFragment extends Fragment {
                                         adminAccountManagerAdapter.setAccount(accounts);
                                     }
                                 });
+                                break;
                             }
                             default: {
 

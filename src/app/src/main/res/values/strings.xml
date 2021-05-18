@@ -69,4 +69,12 @@
     <string name="account_product_title">Products</string>
     <string name="account_order_title">Orders</string>
     <string name="loading_error">Some errors occured. Please check your internet connection</string>
+    <string name="unconfirmed">UNCONFIRMED</string>
+    <string name="confirmed">CONFIRMED</string>
+    <string name="delivering">DELIVERING</string>
+    <string name="delivered">DELIVERED</string>
+    <string name="delete_order_fail">ERROR: can\'t delete this order</string>
+    <string name="delete_order_success">Order is deleted</string>
+    <string name="change_order_state_fail">ERROR: can\'t change order state</string>
+    <string name="change_order_state_success">Order state is changed</string>
 </resources>
