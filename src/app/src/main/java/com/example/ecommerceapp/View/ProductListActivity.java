@@ -109,6 +109,11 @@ public class ProductListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
+            case  R.id.profile:
+                Intent profile = new Intent(this, UserPageActivity.class);
+                finish();
+                startActivity(profile);
+                break;
             case R.id.login:
                 Intent login = new Intent(this, LoginActivity.class);
                 finish();
