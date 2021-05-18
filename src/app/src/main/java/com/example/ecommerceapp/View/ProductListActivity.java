@@ -32,6 +32,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     private ProductListViewModel productListViewModel;
     private Realm realm;
+    private RealmApp realmApp;
     private App app;
     private RecyclerView recyclerViewProduct;
     private ProductListItemAdapter productListAdapter;
@@ -43,7 +44,8 @@ public class ProductListActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        app = new RealmApp(this).getApp();
+        realmApp = new RealmApp(this);
+        app = realmApp.getApp();
         Credentials anonymousCredentials = Credentials.anonymous();
         productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
         productListAdapter = new ProductListItemAdapter(this,productListViewModel);
@@ -99,8 +101,12 @@ public class ProductListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_toolbar, menu);
-        return true;
+        if(realmApp.getAccountID()!=null){
+            getMenuInflater().inflate(R.menu.logged_toolbar, menu);
+        }else {
+            getMenuInflater().inflate(R.menu.anonymous_toolbar,menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -135,4 +141,5 @@ public class ProductListActivity extends AppCompatActivity {
         realm.close();
         super.onDestroy();
     }
+
 }

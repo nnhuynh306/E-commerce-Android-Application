@@ -1,6 +1,7 @@
 package com.example.ecommerceapp.View;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
@@ -30,5 +31,11 @@ public class UserPageActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_toolbar,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

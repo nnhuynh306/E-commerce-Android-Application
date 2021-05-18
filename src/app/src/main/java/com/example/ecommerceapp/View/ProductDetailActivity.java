@@ -4,21 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Product;
 import com.example.ecommerceapp.RealmObjects.ProductCategory;
 
+import io.realm.Realm;
+import io.realm.mongodb.App;
+
 public class ProductDetailActivity extends AppCompatActivity {
 
-   int quantityChoosing;
+    int quantityChoosing;
 
+    App app;
+    RealmApp realmApp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realmApp = new RealmApp(this);
+        app = realmApp.getApp();
         setContentView(R.layout.activity_product_detail);
         quantityChoosing = 1;
 
@@ -66,5 +75,14 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(realmApp.getAccountID()!=null){
+            getMenuInflater().inflate(R.menu.logged_toolbar, menu);
+        }else {
+            getMenuInflater().inflate(R.menu.anonymous_toolbar,menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 }
