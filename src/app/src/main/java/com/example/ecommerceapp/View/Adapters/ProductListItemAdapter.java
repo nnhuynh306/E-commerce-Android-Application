@@ -6,28 +6,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.R;
-import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.RealmObjects.Product;
 import com.example.ecommerceapp.View.ProductDetailActivity;
 import com.example.ecommerceapp.ViewModel.ProductListViewModel;
-import com.example.ecommerceapp.ViewModel.ShoppingCartViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -39,9 +33,8 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
     App app;
     List<Product> productList = new ArrayList<>();
 
-    public List<Product> getProductList() {
-        return productList;
-    }
+
+    String searchQuery;
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
@@ -52,6 +45,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
     public ProductListItemAdapter(Context context, ProductListViewModel productListViewModel) {
         this.context = context;
         this.productListViewModel = productListViewModel;
+        searchQuery = null;
     }
 
     public void setApp(App app) {
@@ -60,6 +54,21 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
 
     public void setRealm(Realm realm) {
         this.realm = realm;
+    }
+
+
+    public void setSearchQuery(String searchQuery) {
+        this.searchQuery = searchQuery;
+
+        if(!searchQuery.isEmpty()){
+            List<Product> queryItem = new ArrayList<>();
+            for(int i = 0; i < productList.size(); i++){
+                if (productList.get(i).getName().contains(searchQuery))
+                    queryItem.add(productList.get(i));
+            }
+            productList = queryItem;
+            notifyDataSetChanged();
+        }
     }
 
 
@@ -73,6 +82,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
     @Override
     public void onBindViewHolder(@NonNull @NotNull ProductListItemAdapter.ViewHolder holder, int position) {
         Product product = this.productList.get(position);
+
 
         Glide.with(context)
                 .load(R.drawable.image_holder)
@@ -92,6 +102,8 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
                 bundle.putString("description",product.getDescription());
                 bundle.putDouble("price", product.getPrice());
                 bundle.putInt("quantity",product.getQuantity());
+                bundle.putString("picture",product.getPicture());
+                bundle.putString("category", product.getCategory().getName());
                 intent.putExtras(bundle);
 
                 realm.close();
@@ -115,10 +127,12 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            productImage = itemView.findViewById(R.id.prod_image);
-            productName = itemView.findViewById(R.id.prod_name);
-            productPrice = itemView.findViewById(R.id.prod_price);
-            productQuantity = itemView.findViewById(R.id.prod_qty);
+            productImage = itemView.findViewById(R.id.product_image);
+            productName = itemView.findViewById(R.id.product_name);
+            productPrice = itemView.findViewById(R.id.product_price);
+            productQuantity = itemView.findViewById(R.id.product_quantity);
         }
     }
+
+
 }
