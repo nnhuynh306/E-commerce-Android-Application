@@ -43,7 +43,6 @@ public class LoginViewModel extends BaseObservable {
             }
         }
         if (curUser!=null && curUser.isLoggedIn()){
-            realmApp.setAccountID(curUser.getId());
             return true;
         }
         return false;

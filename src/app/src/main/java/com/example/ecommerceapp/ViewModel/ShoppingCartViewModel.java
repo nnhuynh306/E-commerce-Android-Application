@@ -144,13 +144,16 @@ public class ShoppingCartViewModel extends AndroidViewModel {
 
                     if (cart == null) {
                         handler.sendEmptyMessage(0);
+                        Log.d("ADD TO CART", "fail cart: ");
                     } else {
                         Product product = r.where(Product.class).equalTo("_id", new ObjectId(productId)).findFirst();
 
                         if (product == null) {
+                            Log.d("ADD TO CART", "fail product: ");
                             handler.sendEmptyMessage(0);
                         } else {
                             r.insertOrUpdate(new CartDetail(cart, product, quantity));
+                            Log.d("ADD TO CART", "onSuccess: ");
                             handler.sendEmptyMessage(1);
                         }
                     }

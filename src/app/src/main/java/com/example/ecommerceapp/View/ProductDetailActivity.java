@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -93,11 +94,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         findViewById(R.id.btn_add_to_cart).setOnClickListener(v -> {
             String userName = realmApp.getAccountID();
+            Log.d("ADD TO CART", "onCreate: " + userName);
             if (userName == null) {
                 Toast.makeText(this, R.string.login_needed, Toast.LENGTH_LONG).show();
             } else {
                 shoppingCartViewModel.addToCart(this, productId,
-                        Integer.parseInt(productQuantity.getText().toString()),
+                        Integer.parseInt(quantityToCart.getText().toString()),
                         userName, new Handler() {
                             @Override
                             public void handleMessage(@NonNull Message msg) {
@@ -106,9 +108,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 switch(msg.what) {
                                     case 0: {
                                         Toast.makeText(ProductDetailActivity.this, R.string.add_to_cart_fail, Toast.LENGTH_LONG).show();
+                                        break;
                                     }
                                     case 1: {
                                         Toast.makeText(ProductDetailActivity.this, R.string.add_to_cart_success, Toast.LENGTH_LONG).show();
+                                        break;
                                     }
                                 }
                             }

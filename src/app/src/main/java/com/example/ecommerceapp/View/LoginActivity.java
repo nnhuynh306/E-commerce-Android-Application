@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.ViewModel.LoginViewModel;
 
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(loginViewModel.login(email.getText().toString().toLowerCase()
                         ,password.getText().toString())){
                     loginState = 1;
+                    new RealmApp(LoginActivity.this).setAccountID(email.getText().toString().toLowerCase());
                     ForwardToNextActivity();
                 }
                 loginViewModel.status(loginState);
