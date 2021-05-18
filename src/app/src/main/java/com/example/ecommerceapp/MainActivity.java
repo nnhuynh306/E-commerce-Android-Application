@@ -85,9 +85,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "doInBackground: ");
                     app.login(anonymousCredentials);
                 } catch (Exception e) {
+                    Log.d(TAG, "can't login: ");
                 }
             }
 
+            Log.d(TAG, "login: ");
             progressBar.setVisibility(View.VISIBLE);
 
             try {
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         SyncSession syncSession = app.getSync().getSession(config);
 
         syncSession.downloadAllServerChanges();
+        Log.d(TAG, "downloading changes: ");
         syncSession.addDownloadProgressListener(ProgressMode.INDEFINITELY, new ProgressListener() {
             @Override
             public void onChange(Progress progress) {

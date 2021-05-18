@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.example.ecommerceapp.MongoDBRealm.RealmApp;
+import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Account;
 import com.example.ecommerceapp.RealmObjects.Cart;
 
@@ -11,6 +12,7 @@ import com.example.ecommerceapp.RealmObjects.Cart;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.mongodb.App;
+import io.realm.mongodb.sync.SyncConfiguration;
 
 public class SignUpViewModel {
     private Context context;
@@ -30,13 +32,16 @@ public class SignUpViewModel {
         this.context = context;
         this.app = new RealmApp(context).getApp();
 
-        RealmConfiguration config = new RealmConfiguration.Builder()
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
                 .build();
+
         this.realm =Realm.getInstance(config);
     }
 
     public void setTransaction(){
-        this.realm.executeTransaction(transactionRealm ->{
+        this.realm.executeTransactionAsync(transactionRealm ->{
             transactionRealm.insertOrUpdate(this.account);
             transactionRealm.insertOrUpdate(this.cart);
         });
