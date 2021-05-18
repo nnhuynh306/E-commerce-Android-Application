@@ -73,9 +73,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
             startActivity(login);
         }
 
-        Credentials anonymousCredentials = Credentials.anonymous();
-
-
         cartView = findViewById(R.id.cart_list);
 
         cartAdapter = new ShoppingCartAdapter(this, shoppingCartViewModel);
@@ -83,31 +80,25 @@ public class ShoppingCartActivity extends AppCompatActivity {
         cartView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         cartView.setAdapter(cartAdapter);
 
-        app.loginAsync(anonymousCredentials, it -> {
-            if (it.isSuccess()) {
-                Log.v("AUTH", "Successfully authenticated anonymously.");
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
 
-                SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), getString(R.string.PARTITION))
-                        .allowQueriesOnUiThread(true)
-                        .allowWritesOnUiThread(true)
-                        .build();
-
-                Realm.getInstanceAsync(config, new Realm.Callback() {
-                    @Override
-                    public void onSuccess(Realm realm) {
-                        ShoppingCartActivity.this.realm = realm;
-                        cartAdapter.setRealm(realm);
-                        if (shoppingCartViewModel.loadCartDetails(realm, userName)) {
-                            shoppingCartViewModel.getCartDetailsLiveData().observe(ShoppingCartActivity.this, new Observer<List<CartDetail>>() {
-                                @Override
-                                public void onChanged(List<CartDetail> cartDetails) {
-                                    cartAdapter.setCartDetails(cartDetails);
-                                    setPrice(cartDetails, 2);
-                                }
-                            });
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                ShoppingCartActivity.this.realm = realm;
+                cartAdapter.setRealm(realm);
+                if (shoppingCartViewModel.loadCartDetails(realm, userName)) {
+                    shoppingCartViewModel.getCartDetailsLiveData().observe(ShoppingCartActivity.this, new Observer<List<CartDetail>>() {
+                        @Override
+                        public void onChanged(List<CartDetail> cartDetails) {
+                            cartAdapter.setCartDetails(cartDetails);
+                            setPrice(cartDetails, 2);
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 

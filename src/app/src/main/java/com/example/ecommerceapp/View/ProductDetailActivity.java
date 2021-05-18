@@ -1,18 +1,24 @@
 package com.example.ecommerceapp.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Product;
 import com.example.ecommerceapp.RealmObjects.ProductCategory;
+import com.example.ecommerceapp.ViewModel.ShoppingCartViewModel;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -23,9 +29,17 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     App app;
     RealmApp realmApp;
+
+    String productId;
+
+    ShoppingCartViewModel shoppingCartViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        shoppingCartViewModel = new ViewModelProvider(this).get(ShoppingCartViewModel.class);
+
         realmApp = new RealmApp(this);
         app = realmApp.getApp();
         setContentView(R.layout.activity_product_detail);
@@ -43,6 +57,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         Bundle extras = intent.getExtras();
+        productId = extras.getString("id");
         Product product = new Product(extras.getString("name"),
                 extras.getInt("quantity"),
                 extras.getDouble("price"),
@@ -73,6 +88,31 @@ public class ProductDetailActivity extends AppCompatActivity {
                     quantityChoosing++;
                     quantityToCart.setText(String.valueOf(quantityChoosing));
                 }
+            }
+        });
+
+        findViewById(R.id.btn_add_to_cart).setOnClickListener(v -> {
+            String userName = realmApp.getAccountID();
+            if (userName == null) {
+                Toast.makeText(this, R.string.login_needed, Toast.LENGTH_LONG).show();
+            } else {
+                shoppingCartViewModel.addToCart(this, productId,
+                        Integer.parseInt(productQuantity.getText().toString()),
+                        userName, new Handler() {
+                            @Override
+                            public void handleMessage(@NonNull Message msg) {
+                                super.handleMessage(msg);
+
+                                switch(msg.what) {
+                                    case 0: {
+                                        Toast.makeText(ProductDetailActivity.this, R.string.add_to_cart_fail, Toast.LENGTH_LONG).show();
+                                    }
+                                    case 1: {
+                                        Toast.makeText(ProductDetailActivity.this, R.string.add_to_cart_success, Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+                        });
             }
         });
     }
