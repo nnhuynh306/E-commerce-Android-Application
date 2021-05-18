@@ -99,7 +99,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_toolbar, menu);
+        getMenuInflater().inflate(R.menu.anonymous_toolbar, menu);
         return true;
     }
 

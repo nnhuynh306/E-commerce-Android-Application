@@ -21,6 +21,7 @@ import com.example.ecommerceapp.RealmObjects.Cart;
 import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.RealmObjects.Product;
 import com.example.ecommerceapp.RealmObjects.ProductCategory;
+import com.example.ecommerceapp.View.ProductListActivity;
 import com.example.ecommerceapp.View.UserPageActivity;
 
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChange(Progress progress) {
                 if (progress.getFractionTransferred() == 1) {
-                    Intent user = new Intent(MainActivity.this, UserPageActivity.class);
+                    Intent user = new Intent(MainActivity.this, ProductListActivity.class);
                     MainActivity.this.finish();
                     startActivity(user);
                 }
