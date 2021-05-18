@@ -15,6 +15,8 @@ import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Account;
 
+import java.util.Objects;
+
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import io.realm.mongodb.App;
@@ -22,6 +24,8 @@ import io.realm.mongodb.sync.SyncConfiguration;
 
 public class AccountViewModel extends AndroidViewModel {
     private App app;
+
+    LiveRealmResults<Account> allAccountsLiveData;
 
     MutableLiveData<Account> accountLiveData = new MutableLiveData<>();
 
@@ -95,5 +99,45 @@ public class AccountViewModel extends AndroidViewModel {
 
     public MutableLiveData<Account> getAccountLiveData() {
         return accountLiveData;
+    }
+
+    public void loadAllAccounts(Context context, Handler handler) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                realm.executeTransaction(r -> {
+                    allAccountsLiveData = new LiveRealmResults<Account>(r.where(Account.class).findAll());
+
+                    handler.sendEmptyMessage(1);
+                });
+
+            }
+        });
+    }
+
+    public void deleteAccount(Context context, Account account) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                realm.executeTransaction(r -> {
+                    account.deleteFromRealm();
+                });
+
+            }
+        });
+    }
+
+    public LiveRealmResults<Account> getAllAccountsLiveData() {
+        return allAccountsLiveData;
     }
 }
