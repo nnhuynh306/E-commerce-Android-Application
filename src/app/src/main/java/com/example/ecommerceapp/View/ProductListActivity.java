@@ -2,7 +2,6 @@ package com.example.ecommerceapp.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,12 +12,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 
 import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
-import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.RealmObjects.Product;
 import com.example.ecommerceapp.View.Adapters.ProductListItemAdapter;
 import com.example.ecommerceapp.ViewModel.ProductListViewModel;
@@ -98,7 +95,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        getMenuInflater().inflate(R.menu.admin_toolbar, menu);
         return true;
     }
 
