@@ -42,8 +42,12 @@ public class SignUpViewModel {
 
     public void setTransaction(){
         this.realm.executeTransactionAsync(transactionRealm ->{
-            transactionRealm.insertOrUpdate(this.account);
-            transactionRealm.insertOrUpdate(this.cart);
+            Account tmpAccount = transactionRealm.createObject(Account.class, account.get_id());
+            tmpAccount.setPassword(account.getPassword());
+            tmpAccount.setEmail(account.getEmail());
+
+            Cart tmpCart = transactionRealm.createObject(Cart.class, cart.getId());
+            tmpCart.setAccount(tmpAccount);
         });
     }
 
