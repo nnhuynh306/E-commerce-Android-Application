@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -152,6 +153,22 @@ public class ShoppingCartActivity extends AppCompatActivity {
         totalPriceView.setText(String.valueOf(bd.doubleValue()));
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.profile:
+                Intent profile = new Intent(this, UserPageActivity.class);
+                profile.putExtra("returnActivityName", "ShoppingCartActivity");
+                finish();
+                startActivity(profile);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
