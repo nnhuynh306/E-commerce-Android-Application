@@ -123,4 +123,15 @@
             android:textColor="@color/white"
            />
     </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:src="@drawable/house"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="80dp"
+        android:id="@+id/checkout_home"/>
 </RelativeLayout>

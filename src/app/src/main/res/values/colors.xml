@@ -11,4 +11,5 @@
     <color name="tabSelectedIconColor">#F5BD02</color>
     <color name="tabUnselectedIconColor">#FFFFFF</color>
     <color name="red">	#FF0000</color>
+    <color name="blue">#30D7F2</color>
 </resources>

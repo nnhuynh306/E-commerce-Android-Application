@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<RelativeLayout android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".View.ShoppingCartActivity">
-
-<!--    <include-->
-<!--        android:id="@+id/toolbar"-->
-<!--        layout="@layout/toolbar_shopping_cart"/>-->
-
     <ScrollView
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <LinearLayout
 
@@ -130,6 +125,17 @@
                     android:layout_marginEnd="20dp"/>
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-</LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/blue"
+        android:src="@drawable/house"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="10dp"
+        android:id="@+id/cart_home"/>
+</RelativeLayout>

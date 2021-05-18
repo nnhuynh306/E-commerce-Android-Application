@@ -36,7 +36,7 @@ public class SignUpViewModel {
     }
 
     public void setTransaction(){
-        this.realm.executeTransactionAsync(transactionRealm ->{
+        this.realm.executeTransaction(transactionRealm ->{
             transactionRealm.insertOrUpdate(this.account);
             transactionRealm.insertOrUpdate(this.cart);
         });

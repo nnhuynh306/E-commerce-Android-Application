@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.example.ecommerceapp.RealmObjects.CartDetail;
 import com.example.ecommerceapp.View.Adapters.CheckOutItemAdapter;
 import com.example.ecommerceapp.View.Adapters.ShoppingCartAdapter;
 import com.example.ecommerceapp.ViewModel.ShoppingCartViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -47,7 +49,6 @@ import io.realm.mongodb.sync.SyncConfiguration;
 
 public class CheckOutActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
 
     ShoppingCartViewModel shoppingCartViewModel;
 
@@ -78,6 +79,15 @@ public class CheckOutActivity extends AppCompatActivity {
         phoneNumberEditText = findViewById(R.id.phoneNumber);
         receiverNameEditText = findViewById(R.id.receiverName);
 
+        FloatingActionButton home = findViewById(R.id.checkout_home);
+        home.bringToFront();
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent product_List = new Intent(CheckOutActivity.this, ProductListActivity.class);
+                startActivity(product_List);
+            }
+        });
 
         cartView = findViewById(R.id.cart_list);
 
