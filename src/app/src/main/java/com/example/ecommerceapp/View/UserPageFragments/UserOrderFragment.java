@@ -71,6 +71,7 @@ public class UserOrderFragment extends Fragment {
                                 ordersAdapter.setData(orders);
                             }
                         });
+                        break;
                 }
             }
         });

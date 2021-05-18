@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_adminPageMainFragment_to_adminAccountDetailFragment"
             app:destination="@id/adminAccountDetailFragment" />
+        <action
+            android:id="@+id/action_adminPageMainFragment_to_adminOrderDetailFragment"
+            app:destination="@id/adminOrderDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminAccountDetailFragment"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_admin_account_detail" >
         <argument
             android:name="accountId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminOrderDetailFragment"
+        android:name="com.example.ecommerceapp.View.AdminPageFragments.AdminOrderDetailFragment"
+        android:label="fragment_admin_order_detail"
+        tools:layout="@layout/fragment_admin_order_detail" >
+        <argument
+            android:name="orderId"
             app:argType="string" />
     </fragment>
 </navigation>
