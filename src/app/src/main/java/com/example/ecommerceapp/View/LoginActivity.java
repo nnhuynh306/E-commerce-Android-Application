@@ -29,7 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loginViewModel.login(email.getText().toString(),password.getText().toString())){
+                if(loginViewModel.login(email.getText().toString().toLowerCase()
+                        ,password.getText().toString())){
                     loginState = 1;
                 }
                 loginViewModel.status(loginState);

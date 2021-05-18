@@ -41,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProgressDialog dialog = ProgressDialog.show(SignUpActivity.this, "",
                         "Loading. Please wait...", true);
-                email = emailText.getText().toString();
+                email = emailText.getText().toString().toLowerCase();
                 pass = passwordText.getText().toString();
 
                 if(repassText.getText().toString().compareTo(passwordText.getText().toString())!=0)
