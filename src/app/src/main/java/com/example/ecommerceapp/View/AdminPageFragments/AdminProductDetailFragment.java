@@ -26,6 +26,7 @@ import com.example.ecommerceapp.RealmObjects.Product;
 import com.example.ecommerceapp.RealmObjects.ProductCategory;
 import com.example.ecommerceapp.ViewModel.ProductListViewModel;
 
+import org.bson.types.ObjectId;
 import org.jetbrains.annotations.NotNull;
 
 public class AdminProductDetailFragment extends Fragment {
@@ -55,15 +56,15 @@ public class AdminProductDetailFragment extends Fragment {
         productId = AdminProductDetailFragmentArgs.fromBundle(getArguments()).getProductId();
         intention = AdminProductDetailFragmentArgs.fromBundle(getArguments()).getIntention();
 
-        viewModel.loadProduct(getContext(), productId);
-
-        viewModel.loadProduct(requireContext(), productId);
-        viewModel.getProductMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Product>() {
-            @Override
-            public void onChanged(Product product) {
-                setUpViewContent(product);
-            }
-        });
+        if (!productId.isEmpty()) {
+            viewModel.loadProduct(requireContext(), productId);
+            viewModel.getProductMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Product>() {
+                @Override
+                public void onChanged(Product product) {
+                    setUpViewContent(product);
+                }
+            });
+        }
 
         setupActionBar(view);
 
@@ -78,6 +79,7 @@ public class AdminProductDetailFragment extends Fragment {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     viewModel.deleteProduct(AdminProductDetailFragment.this.getContext(), productId);
+                                    Navigation.findNavController(view).popBackStack();
                                 }
                             })
                             .setNegativeButton("No", null)
@@ -92,7 +94,13 @@ public class AdminProductDetailFragment extends Fragment {
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-//                                    viewModel.updateProduct(AdminProductDetailFragment.this.getContext(), productId, product);
+                                    viewModel.updateProduct(AdminProductDetailFragment.this.getContext(), productId,
+                                            productName.getText().toString(),
+                                            Integer.parseInt(productQuantity.getText().toString()),
+                                            Double.parseDouble(productPrice.getText().toString()),
+                                            productDescription.getText().toString(),
+                                            productImage.getText().toString()
+                                    );
                                 }
                             })
                             .setNegativeButton("No", null)
@@ -110,7 +118,14 @@ public class AdminProductDetailFragment extends Fragment {
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-//                                    viewModel.createProduct(AdminProductDetailFragment.this.getContext(), product);
+                                    viewModel.createProduct(AdminProductDetailFragment.this.getContext(),
+                                            productName.getText().toString(),
+                                            Integer.parseInt(productQuantity.getText().toString()),
+                                            Double.parseDouble(productPrice.getText().toString()),
+                                            productDescription.getText().toString(),
+                                            productImage.getText().toString(),
+                                            productCategory.getText().toString()
+                                    );
                                     Navigation.findNavController(view).popBackStack();
                                 }
                             })
@@ -151,4 +166,5 @@ public class AdminProductDetailFragment extends Fragment {
 
 
     }
+
 }

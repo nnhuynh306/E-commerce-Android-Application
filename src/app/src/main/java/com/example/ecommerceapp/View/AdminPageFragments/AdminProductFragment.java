@@ -92,21 +92,10 @@ public class AdminProductFragment extends Fragment {
         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AdminProductDetailFragment.class);
-                Bundle bundle = new Bundle();
-
-                bundle.putString("id", "");
-                bundle.putString("name", "");
-                bundle.putString("description","");
-                bundle.putDouble("price", 0.0);
-                bundle.putInt("quantity",0);
-                bundle.putString("picture","");
-                bundle.putString("category", "");
-                bundle.putString("intention", "create");
-                intent.putExtras(bundle);
-
                 NavDirections action =
                         AdminPageMainFragmentDirections.actionAdminPageMainFragmentToAdminProductDetailFragment("", "create");
+
+                Navigation.findNavController(view).navigate(action);
             }
         });
     }
