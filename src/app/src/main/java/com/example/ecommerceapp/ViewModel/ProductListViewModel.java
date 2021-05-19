@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ecommerceapp.MongoDBRealm.RealmApp;
@@ -28,7 +29,11 @@ import io.realm.mongodb.sync.SyncConfiguration;
 public class ProductListViewModel extends AndroidViewModel {
     private RealmResults<Product> ProductListData;
 
+    private LiveRealmResults<Product> productLiveRealmResults;
+
     private App app;
+
+    private MutableLiveData<Product> productMutableLiveData = new MutableLiveData<>();
 
     public ProductListViewModel(Application application) {
         super(application);
@@ -53,7 +58,7 @@ public class ProductListViewModel extends AndroidViewModel {
 
     public RealmResults<Product> getProductListData(){return ProductListData;}
 
-    public void loadAllProducts(Context context, Handler handler) {
+    public void loadAllProducts( Context context, Handler handler) {
         SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
                 .allowQueriesOnUiThread(true)
                 .allowWritesOnUiThread(true)
@@ -63,7 +68,8 @@ public class ProductListViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(Realm realm) {
                 realm.executeTransaction(r -> {
-                    ProductListData = realm.where(Product.class).findAll();
+                    productLiveRealmResults = new LiveRealmResults<Product>(realm.where(Product.class).findAll());
+
                     handler.sendEmptyMessage(1);
                 });
 
@@ -94,6 +100,27 @@ public class ProductListViewModel extends AndroidViewModel {
                     }
                 });
                 realm.close();
+            }
+        });
+    }
+
+    public void loadProduct(Context context, String productId) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                realm.executeTransaction(r -> {
+                    try {
+                        Product product = Objects.requireNonNull(r.where(Product.class).equalTo("_id", new ObjectId(productId)).findFirst());
+                        productMutableLiveData.setValue(product);
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
+                });
             }
         });
     }
@@ -148,5 +175,13 @@ public class ProductListViewModel extends AndroidViewModel {
                 realm.close();
             }
         });
+    }
+
+    public LiveRealmResults<Product> getProductLiveRealmResults() {
+        return productLiveRealmResults;
+    }
+
+    public MutableLiveData<Product> getProductMutableLiveData() {
+        return productMutableLiveData;
     }
 }

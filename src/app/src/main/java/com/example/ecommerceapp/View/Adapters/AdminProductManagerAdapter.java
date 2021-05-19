@@ -3,6 +3,7 @@ package com.example.ecommerceapp.View.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Product;
+import com.example.ecommerceapp.View.AdminPageFragments.AdminPageMainFragmentDirections;
 import com.example.ecommerceapp.View.AdminPageFragments.AdminProductDetailFragment;
+import com.example.ecommerceapp.View.AdminPageFragments.AdminProductFragment;
 import com.example.ecommerceapp.ViewModel.ProductListViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,10 +41,13 @@ public class AdminProductManagerAdapter extends RecyclerView.Adapter<AdminProduc
     Realm realm;
     App app;
 
-    public AdminProductManagerAdapter(Context context, ProductListViewModel productListViewModel) {
+    NavController navController;
+
+    public AdminProductManagerAdapter(Context context, ProductListViewModel productListViewModel, NavController navController) {
         this.context = context;
         this.productListViewModel = productListViewModel;
         searchQuery ="";
+        this.navController = navController;
     }
 
     public void setProductList(List<Product> productList) {
@@ -69,7 +77,7 @@ public class AdminProductManagerAdapter extends RecyclerView.Adapter<AdminProduc
     @NotNull
     @Override
     public AdminProductManagerAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(context).inflate(R.layout.fragment_admin_product_item,parent,false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_admin_product_item,parent,false);
         return new ViewHolder(item);
     }
 
@@ -90,20 +98,10 @@ public class AdminProductManagerAdapter extends RecyclerView.Adapter<AdminProduc
         holder.adminProductItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AdminProductDetailFragment.class);
-                Bundle bundle = new Bundle();
-
-                bundle.putString("id", product.getId().toString());
-                bundle.putString("name", product.getName());
-                bundle.putString("description",product.getDescription());
-                bundle.putDouble("price", product.getPrice());
-                bundle.putInt("quantity",product.getQuantity());
-                bundle.putString("picture",product.getPicture());
-                bundle.putString("category", product.getCategory().getName());
-                bundle.putString("intention", "edit");
-                intent.putExtras(bundle);
-
-                v.getContext().startActivity(intent);
+                NavDirections action =
+                        AdminPageMainFragmentDirections.actionAdminPageMainFragmentToAdminProductDetailFragment(
+                                product.getId().toString(),"edit");
+                navController.navigate(action);
             }
         });
     }

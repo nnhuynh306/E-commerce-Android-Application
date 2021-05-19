@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,9 +58,9 @@ public class AdminProductFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ProductListViewModel.class);
 
 
-        recyclerView = view.findViewById(R.id.order_list);
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-        adminProductManagerAdapter = new AdminProductManagerAdapter(requireContext(),viewModel);
+        adminProductManagerAdapter = new AdminProductManagerAdapter(requireContext(),viewModel, Navigation.findNavController(view));
         recyclerView.setAdapter(adminProductManagerAdapter);
 
 
@@ -70,8 +71,12 @@ public class AdminProductFragment extends Fragment {
 
                 switch (msg.what) {
                     case 1: {
-                       List<Product> products = realm.copyFromRealm(viewModel.getProductListData());
-                       adminProductManagerAdapter.setProductList(products);
+                        viewModel.getProductLiveRealmResults().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+                            @Override
+                            public void onChanged(List<Product> products) {
+                                adminProductManagerAdapter.setProductList(products);
+                            }
+                        });
                     }
                     default: { }
                 }
@@ -100,7 +105,8 @@ public class AdminProductFragment extends Fragment {
                 bundle.putString("intention", "create");
                 intent.putExtras(bundle);
 
-                v.getContext().startActivity(intent);
+                NavDirections action =
+                        AdminPageMainFragmentDirections.actionAdminPageMainFragmentToAdminProductDetailFragment("", "create");
             }
         });
     }

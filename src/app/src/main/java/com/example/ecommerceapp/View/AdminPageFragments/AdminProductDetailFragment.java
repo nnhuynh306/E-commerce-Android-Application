@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ public class AdminProductDetailFragment extends Fragment {
 
     ProductListViewModel viewModel;
 
+    String productId, intention;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,19 +52,22 @@ public class AdminProductDetailFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ProductListViewModel.class);
         setupView(view);
 
-        Intent intent = this.requireActivity().getIntent();
-        Bundle extras = intent.getExtras();
-        Product product = new Product(extras.getString("name"),
-                extras.getInt("quantity"),
-                extras.getDouble("price"),
-                extras.getString("description"),
-                extras.getString("picture"),
-                new ProductCategory(extras.getString("category")));
+        productId = AdminProductDetailFragmentArgs.fromBundle(getArguments()).getProductId();
+        intention = AdminProductDetailFragmentArgs.fromBundle(getArguments()).getIntention();
+
+        viewModel.loadProduct(getContext(), productId);
+
+        viewModel.loadProduct(requireContext(), productId);
+        viewModel.getProductMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Product>() {
+            @Override
+            public void onChanged(Product product) {
+                setUpViewContent(product);
+            }
+        });
 
         setupActionBar(view);
-        setUpViewContent(product);
 
-        if(extras.getString("intention").equals("edit")) {
+        if(intention.equals("edit")) {
             create.setVisibility(View.INVISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,7 +77,7 @@ public class AdminProductDetailFragment extends Fragment {
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    viewModel.deleteProduct(AdminProductDetailFragment.this.getContext(), extras.getString("id"));
+                                    viewModel.deleteProduct(AdminProductDetailFragment.this.getContext(), productId);
                                 }
                             })
                             .setNegativeButton("No", null)
@@ -85,7 +92,7 @@ public class AdminProductDetailFragment extends Fragment {
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    viewModel.updateProduct(AdminProductDetailFragment.this.getContext(), extras.getString("id"), product);
+//                                    viewModel.updateProduct(AdminProductDetailFragment.this.getContext(), productId, product);
                                 }
                             })
                             .setNegativeButton("No", null)
@@ -103,8 +110,8 @@ public class AdminProductDetailFragment extends Fragment {
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    viewModel.createProduct(AdminProductDetailFragment.this.getContext(), product);
-                                    AdminProductDetailFragment.this.getActivity().finish();
+//                                    viewModel.createProduct(AdminProductDetailFragment.this.getContext(), product);
+                                    Navigation.findNavController(view).popBackStack();
                                 }
                             })
                             .setNegativeButton("No", null)
