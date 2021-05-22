@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.ecommerceapp.MongoDBRealm.RealmApp;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.RealmObjects.Account;
+import com.example.ecommerceapp.RealmObjects.Admin;
 
 import java.util.Objects;
 
@@ -152,6 +153,25 @@ public class AccountViewModel extends AndroidViewModel {
                     account.deleteFromRealm();
                 });
 
+            }
+        });
+    }
+
+    public void isAdmin(Context context, String username, Handler handler) {
+        SyncConfiguration config = new SyncConfiguration.Builder(app.currentUser(), context.getString(R.string.PARTITION))
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build();
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                Admin admin = realm.where(Admin.class).equalTo("account._id", username).findFirst();
+                if (admin == null) {
+                    handler.sendEmptyMessage(0);
+                } else {
+                    handler.sendEmptyMessage(1);
+                }
             }
         });
     }

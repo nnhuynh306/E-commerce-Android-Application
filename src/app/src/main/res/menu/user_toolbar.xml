@@ -8,4 +8,11 @@
         android:title="Menu1">
 
     </item>
+    <item
+        android:id="@+id/admin_page"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/admin_page_icon"
+        android:title="Menu1">
+
+    </item>
 </menu>

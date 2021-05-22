@@ -48,7 +48,6 @@ public class AdminPageActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_toolbar,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
